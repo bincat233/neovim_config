@@ -1,0 +1,599 @@
+call plug#begin(stdpath('data') . '/plugged')
+" Plugins go here
+" Know that powerful tools require powerful control
+" 须知强力工具需要强力掌控
+" 
+" =====主题=====
+Plug 'cocopon/iceberg.vim'    " 配合 arc theme
+Plug 'altercation/vim-colors-solarized' " solarized主题
+"Plug 'junegunn/seoul256.vim'  " 超好看的低对比度主题
+"Plug 'RRRRRm/seoul256-airline' " airline支持
+"Plug 'morhetz/gruvbox'        " gruvbox主题
+"Plug 'nightsense/strawberry'  " 粉色vim主题
+"Plug 'soft-aesthetic/soft-era-vim' " 粉色*2
+"Plug 'ayu-theme/ayu-vim'      " 赏心悦目的绿色主题
+"Plug 'rakr/vim-two-firewatch' " 浅亚麻色
+"Plug 'cormacrelf/vim-colors-github' " 据说statuline超好看
+"Plug 'edkolev/tmuxline.vim'  " 导出状态栏至tmux
+
+" =====实用插件=====
+"Plug 'Lilja/vim-chezmoi'    " :w 提交到 chezmoi
+Plug 'github/copilot.vim'
+"let g:chezmoi = "disabled"
+"Plug 'sheerun/vim-polyglot' " 语言包(包含vim-sensible) 2022-02-20: neovim 暂时不兼容
+Plug 'nvim-treesitter/nvim-treesitter' " neovim 的高亮方案
+"Plug 'nvim-lua/plenary.nvim' " Some Lua libraries.
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
+"Plug 'junegunn/fzf.vim' " fzf.vim
+"Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } " native telescope sorter
+"Plug 'nvim-telescope/telescope.nvim' " fuzzy finder (like fzf)
+"Plug 'tpope/vim-sensible'    " 我当然是个理智的人
+"Plug 'nvim-lua/plenary.nvim' " Required by diffview.nvim
+"Plug 'sindrets/diffview.nvim.git' " Better vimdiff!!
+Plug 'RRethy/vim-hexokinase' " 颜色显示
+"Plug 'ap/vim-css-color'       " 颜色显示
+"Plug 'tpope/vim-endwise'      " 自动结束结构, 与COC冲突???
+Plug 'Raimondi/delimitMate'                     " 括号自动补全
+Plug 'honza/vim-snippets'     " 代码片段仓库
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'SirVer/ultisnips'      " 代码片段
+"Plug 'vimcn/vimcdoc'         " vim中文文档
+"Plug 'Valloric/YouCompleteMe', { 'do': 'MAKEFLAGS=12 ./install.py' } " 代码补全
+Plug 'terryma/vim-multiple-cursors'             " 多行编辑
+Plug 'airblade/vim-gitgutter'                   " git
+"Plug 'dense-analysis/ale'                       " 代码异步检测插件
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " 文件管理器
+Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'jistr/vim-nerdtree-tabs'
+Plug 'godlygeek/tabular'                "对齐文本与表格
+Plug 'luochen1990/rainbow'              " 彩虹括号
+"Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮
+"Plug 'Yggdroot/indentLine'              " 缩进线
+Plug 'tpope/vim-surround'    " 增强配对符号编辑(快速加括号等), 文本对象s
+Plug 'ludovicchabant/vim-gutentags' " Gtag client
+Plug 'skywind3000/gutentags_plus'   " 数据库无缝切换
+Plug 'skywind3000/asyncrun.vim'     " 异步命令
+Plug 'skywind3000/asynctasks.vim'   " 异步tasks
+"Plug 'puremourning/vimspector'     " 调试器!!!
+Plug 'easymotion/vim-easymotion'    " 快速跳转
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }   " 搜索插件
+if $USER != 'root'
+	Plug 'lilydjwg/fcitx.vim' " 输入法切换, 需要fcitx-remote
+endif
+Plug 'dstein64/nvim-scrollview' " 滚动条
+"=============== FileType support ===============
+Plug 'octol/vim-cpp-enhanced-highlight' " c/cpp highlighting
+"Plug 'mboughaba/i3config.vim' "i3配置文件
+"Plug 'WolfgangMehner/bash-support'      " Bash, 和 COC 冲突
+"Plug 'plasticboy/vim-markdown', { 'for': 'markdown'} " Markdown, in polyglot
+"Plug 'vim-latex/vim-latex', { 'for': 'tex'}     " LaTeX支持
+"==============COC======================
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " 代码补全
+"Plug 'repeat.vim'        " 使用.重复命令
+"Plug 'christoomey/vim-tmux-navigator' " 与tmux配合
+"Plug 'mattn/emmet-vim'   " 前端神器不解释
+"Plug 'liuchengxu/vista.vim'  " Viewer & Finder for LSP symbols and tags in Vim
+"Plug 'kana/vim-textobj-user' " textobj全家桶, 新增文本对象
+"Plug 'kana/vim-textobj-indent'
+"Plug 'kana/vim-textobj-syntax'
+"Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+"Plug 'sgur/vim-textobj-parameter'
+
+"==========DETECT OS==========
+let uname=substitute(system('uname'), '\n', '', '')
+"==========FOR MACOS====k======
+if uname == 'Darwin'
+  Plug 'darfink/vim-plist' "编辑plist
+  Plug 'rizzatti/dash.vim' " 允许使用:Dash 系列命令
+endif
+"==========FOR MACOS END==========
+call plug#end()
+
+set encoding=utf-8 "支持多字节字符
+scriptencoding utf-8 "支持多字节字符, 和上一条的顺序不能变
+set termguicolors "vim真彩色支持
+set guifont=Operator\ Mono:h11
+set guifontwide=方正清刻本悦宋\ 简繁:h11
+set title
+"colorscheme seoul256 " 设置主题
+"let g:airline_theme = 'seoul256'
+"==========FOR LINUX==========
+if uname == 'Linux'
+  if empty($DISPLAY) && empty($SSH_TTY) " In tty
+    colorscheme solarized " 设置主题
+    set background=dark " 日间/夜间背景
+  else " In GUI or SSH
+    colorscheme iceberg " 设置主题
+    set background=light " 日间/夜间背景
+  endif
+endif
+
+"==========FOR LINUX END==========
+
+set signcolumn=auto:9 " 符号列自动增长, Neovim
+let g:airline_theme='iceberg'
+"let g:gruvbox_termcolors = 256
+"hi Normal ctermfg=252 ctermbg=none
+set magic "开启正则
+"let g:gruvbox_contrast_dark = 'hard'
+set backspace=2 "修复Mac下delete无法使用
+set backupdir=/tmp "设置备份文件目录
+set directory=/tmp "设置临时文件目录
+"set foldmethod=syntax "代码折叠
+set noshowmode " 隐藏因为airline重复的 --INSERT--
+set helplang=cn " 设置帮助文件为中文
+set hlsearch "检索时高亮显示匹配项
+set ignorecase "检索时忽略大小写
+set laststatus=2 " 总是显示状态行
+set number " 显示行号
+set ruler "显示位置指示器
+"set smarttab "智能制表符
+filetype plugin indent on " 文件类型缩进
+set tabstop=2 " 设置tab键显示长度
+set softtabstop=2 " tab长度, 使用tab和空格凑出来
+set shiftwidth=2 "自动缩进空白长度
+"set expandtab "使用空格替代制表符
+set noexpandtab "使用制表符替代空格
+"set clipboard=unnamed "使用系统剪切板
+syntax on " 代码高亮
+set cursorcolumn "高亮当前列
+set cursorline "高亮当前行
+set mouse=a " 开启鼠标模式
+set wildmenu " 命令模式的补全菜单
+set undofile " 保留历史记录
+set undodir=~/.undodir " 统一历史记录存放位置
+set hidden " 切换buffer时隐藏旧buffer
+set path=$PWD/** " 将当前工作路径设为Vim PATH
+" 好像有冲突, 用 `verbose map <leader>' 检查
+" Leader Key!
+let mapleader="\<Space>" 
+"let mapleader=","
+"vmap <leader>y "+y
+"vmap <leader>d "+d
+"nmap <leader>p "+p
+"nmap <leader>P "+P
+"vmap <leader>p "+p
+"vmap <leader>P "+P
+"filetype plugin indent on " 开启文件类型检测
+"
+nnoremap <leader>rc :source $MYVIMRC<cr>
+" @@<non-keyword-character> print my email.
+iabbrev @@ isxiongzj@gmail.com
+""""""""""""""""""""""""""""" Fix COC Colorscheme
+autocmd ColorScheme * hi CocMenuSel ctermbg=237 guibg=#a7b2cd
+doautocmd ColorScheme
+"""""""""""""""""""""""""""""""" 彩虹括号
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+  \ 'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+  \ 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+  \ 'operators': '_,_',
+  \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+  \ 'separately': {
+  \   '*': {},
+  \   'tex': {
+  \     'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+  \   },
+  \   'lisp': {
+  \     'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+  \   },
+  \   'vim': {
+  \     'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+  \   },
+  \   'html': {
+  \     'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+  \   },
+  \   'css': 0,
+  \ }
+  \}
+
+""""""""""""""""""""""""""""""""""""" vim-airline配置
+if empty($DISPLAY) && empty($SSH_TTY) " In tty
+  let g:airline_powerline_fonts = 0
+" If not in GUI or SSH, don't using "  "
+else 
+  let g:airline_powerline_fonts = 1
+  let g:airline_left_sep = ' '
+  let g:airline_left_alt_sep = '│'
+  let g:airline_right_sep = ' '
+  let g:airline_right_alt_sep = '│'
+endif
+let g:airline#extensions#tabline#enabled = 1 "只打开一个选项卡时自动显示所有缓冲区
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '│' "tab分隔符
+"let g:airline#extensions#ale#enabled = 1 "检错airline支持,默认即开启
+"let g:airline#extensions#coc#enabled = 1 "检错airline支持,默认即开启
+let g:airline_mode_map = {} " 补全的时候不要显示 INSERT COMPL
+let g:airline_mode_map['ic'] = 'INSERT' " 同上
+
+""""""""""""""""""""""""""""""""""""""""""""""YouCompleteMe配置
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"let g:ycm_use_ultisnips_completer = 1 "提示UltiSnips
+"let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+"let g:ycm_collect_identifiers_from_tags_files = 1 "开启YCM标签补全引擎
+"let g:ycm_show_diagnostics_ui = 0 "关闭YCM辣鸡代码检测
+"let g:ycm_enable_diagnostic_signs = 0
+"let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_seed_identifiers_with_syntax=1 "语言关键字补全
+""自动语义补全
+"let g:ycm_semantic_triggers = {
+"\ 'c,cpp,python,java,go,erlang,perl' : ['re!\w{2}'],
+"\ 'cs,lua,javascript' : ['re~\w{2}'],
+"\}
+"
+"i3config
+aug my_ft_detection
+  au!
+  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+  au BufNewFile,BufRead ~/.local/share/chezmoi/dot_config/i3/config set filetype=i3config
+  au BufNewFile,BufRead ~/.local/share/chezmoi/dot_zshrc set filetype=zsh
+  au BufNewFile,BufRead ~/.config/fontconfig/fonts.conf set filetype=xml
+  au BufNewFile,BufRead ~/.local/share/chezmoi/dot_config/fontconfig/fonts.conf set filetype=xml
+  au BufNewFile,BufRead ~/.config/polybar/config set filetype=dosini
+  au BufNewFile,BufRead ~/.local/share/chezmoi/dot_config/polybar/config set filetype=dosini
+aug end
+
+"""""""""""""""""""""""""""" coc补全 """"""""""""""""""""""""""""""""""""
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+""""""""" coc-snippets """"""""
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+""""""""" 让endwise与COC兼容 """"""""
+""" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+""let g:endwise_no_mappings = v:true
+""if exists('*complete_info')
+""  "inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+""  inoremap <expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+""  "inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+""else
+""  inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+""endif
+""" 绕开坑人的<CR>
+""imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+""""""""""""""""""""""""""""""""COC END"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""" UltiSnips搜索跳转配置
+"let g:UltiSnipsExpandTrigger = '<C-j>'
+"let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+"let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+"let g:UltiSnipsSnippetsDir= stdpath('data') . '/plugged/vim-snippets/UltiSnips'
+"let g:UltiSnipsSnippetDirectories=['UltiSnips']
+
+
+"""""""""""""""""ALE配置""""""""""""""""""""
+"let g:ale_sign_error = '>>'
+"let g:ale_sign_warning = '--'
+"let g:ale_completion_enabled = 0 "关闭补全
+"let g:ale_sign_column_always = 1 "随时显示侧边栏
+"let g:ale_vim_vint_executable = 'vint'
+"highlight ALEError guibg=#D69E9B ctermbg=red cterm=undercurl
+"highlight ALEWarning guibg=#EDECA9 ctermbg=yellow cterm=undercurl
+""显示Linter名称,出错或警告等相关信息
+"let g:ale_echo_msg_error_str = 'E'
+"let g:ale_echo_msg_warning_str = 'W'
+"let g:ale_echo_msg_format = '[%linter%] %severity%: %s'
+""代码格式化配置,确保这些工具都已安装
+"let g:ale_fixers = {
+"\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\ 'javascript': ['eslint'],
+"\ 'json':['jq'],
+"\ 'c':['clang-format'],
+"\ 'cpp':['clang-format'],
+"\ 'lua':['luacheck'],
+"\ 'sh':['shfmt'],
+"\ 'zsh':['shfmt', 'remove_trailing_lines', 'trim_whitespace'],
+"\ 'sql':['sqlfmt'],
+"\ 'python':['black'],
+"\ 'markdown':['prettier'],
+"\ 'TypeScript':['prettier'],
+"\ 'xml':['xmllint']
+"\}
+"let g:ale_linters = {
+"\ 'python': ['flake8'],
+"\ 'reStructuredText': ['rstcheck'],
+"\ 'markdown': ['redpen', 'mdl']
+"\}
+"call ale#Set('python_black_options', ' -l 79')
+""let g:ale_fix_on_save = 1 "自动格式化
+""""""""""""""""""ALE END""""""""""""""""""""""""
+
+""""""""""""""Gutentags: Ctag/Gtag设置""""""""""""""""""
+let $GTAGSLABEL = 'native-pygments'
+let $GTAGSCONF = '/usr/local/etc/gtags.conf'
+"let $GTAGSCONF = '~/.globalrc'
+set tags=./.tags;,.tags " CTag
+" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+  let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+  let g:gutentags_modules += ['gtags_cscope']
+endif
+" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" 如果使用 universal ctags 需要增加下面一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+let g:gutentags_auto_add_gtags_cscope = 0
+
+"""""""""""""""""""""""""""Leaderf
+let g:Lf_StlColorscheme = 'one'
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'Colorscheme':1}
+
+
+""""""""""""""""""""""""" AsyncRun 编译运行
+" 自动打开 quickfix window ，高度为 6
+let g:asyncrun_open = 6
+" 任务结束时候响铃提醒
+let g:asyncrun_bell = 1
+
+" 检测到文件类型为Python
+"autocmd BufEnter *.py set conceallevel=2
+
+""""""""""""""""""""""""""" vimtex
+let g:tex_flavor='latex'
+let g:vimtex_view_method='open'
+let g:vimtex_quickfix_mode=0
+" LaTeX代码隐藏或者替换成其他符号
+let g:tex_conceal='abdmgs'
+
+"""""""""""""""""""""""""" vim-markdown
+""set conceallevel=2 " 代码隐藏, 隐藏或显示listchars定义的替换字符
+"" 用vim-polyglot 禁止基于语法的隐藏
+"let g:vim_json_syntax_conceal = 0
+"let g:vim_markdown_conceal = 0
+"let g:vim_markdown_conceal_code_blocks = 0
+"" vim-markdown 兼容性设置
+"let g:vim_markdown_math=1 " LaTeX
+"let g:vim_markdown_folding_disabled = 1 " 禁止折叠
+"
+""""""""""""""""""""""""""" 缩进线
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+""autocmd BufEnter *.md,*.markdown,*.tex,*.latex IndentLinesToggle "为Markdown/LaTeX关闭缩进线以免插件冲突
+""autocmd BufEnter *.md,*.markdown,*.tex,*.latex,*.sty,*.cls set concealcursor= "为Markdown/LaTeX关闭缩进线以免插件冲突
+"
+""""""""""""""""""""""""""" vim-hexokinase (显示文本颜色)
+let g:Hexokinase_highlighters = ['foreground','sign_column'] " virtual sign_column background[full] foreground[full]
+let g:Hexokinase_refreshEvents = ['BufWrite', 'BufRead','TextChanged', 'InsertLeave'] " BufWrite BufRead TextChanged InsertLeave
+
+"=============== 快捷键配置=====================
+
+"inoremap <Up> <>
+
+
+""""""" jk 快速<esc> """""""
+inoremap jk <esc>
+
+"""""" 插入匹配括号 """""
+" inoremap ( ()<LEFT>
+" inoremap [ []<LEFT>
+" inoremap { {}<LEFT>
+
+""""" <F2> Leaderf快捷键 """""
+noremap <F2> :LeaderfFunction!<CR>
+
+""""" <F5> Python运行
+noremap <F5> :AsyncRun -raw python % <cr>
+
+""""" <F9> 格式化 formating """""
+"" Using ALE to format code
+"function! Fix()
+"  ALEFix
+"  retab
+"endfunction
+"nnoremap <F9> :call Fix()<CR>
+"" Now I using COC to format code 
+nnoremap <F9> :Format<CR>
+
+""""" <F10> Nerdtree """""
+noremap <F10> :NERDTreeToggle<CR>
+
+""""" <F10> 切换 asyncrun 的 Quickfix 窗口 """""
+"nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+
+"""""" 配置ale的linter功能: 普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+"nmap <silent> sp <Plug>(ale_previous_wrap)
+"nmap <silent> sn <Plug>(ale_next_wrap)
+
+"""""" vim-multiple-cursors """""
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+"""""" YCM 定义处跳转 """""
+"nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"<Leader>s触发/关闭语法检查
+"nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+"nmap <Leader>d :ALEDetail<CR>
+
+""""" <ESC> 退出LeaderF """""
+let g:Lf_NormalMap = {
+  \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+  \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+  \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+  \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+  \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>'],["<F2>",':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+  \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+  \ }
+
+
