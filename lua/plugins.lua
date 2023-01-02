@@ -29,6 +29,7 @@ packer.startup({
 		-- Colorschemes
 		use 'cocopon/iceberg.vim'
 		use 'shaunsingh/seoul256.nvim'
+		use 'altercation/vim-colors-solarized'
 		use 'catppuccin/nvim'
 		use 'projekt0n/github-nvim-theme'
 		use { -- File explorer
