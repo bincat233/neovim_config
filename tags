@@ -1,0 +1,54 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/bear/.config/nvim/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20220828.0/
+0	coc-settings.json	/^        "fix",$/;"	s	array:diagnostic-languageserver.formatters.php-cs-fixer.args
+0	coc-settings.json	/^      "filetypes": ["go"]$/;"	s	array:languageserver.go.filetypes
+0	coc-settings.json	/^      "rootPatterns": ["go.mod"],$/;"	s	array:languageserver.go.rootPatterns
+0	coc-settings.json	/^    "python": ["black", "isort"],$/;"	s	array:diagnostic-languageserver.formatFiletypes.python
+1	coc-settings.json	/^        "--ansi"$/;"	s	array:diagnostic-languageserver.formatters.php-cs-fixer.args
+1	coc-settings.json	/^    "python": ["black", "isort"],$/;"	s	array:diagnostic-languageserver.formatFiletypes.python
+<F1>	basic.vim	/^inoremap <F1> <Nop>$/;"	m
+<F1>	basic.vim	/^nnoremap <F1> <Nop>$/;"	m
+<F1>	basic.vim	/^vnoremap <F1> <Nop>$/;"	m
+<leader><space>	basic.vim	/^map <leader><space> :let @\/=''<cr> $/;"	m
+<leader>P	basic.vim	/^nmap <leader>P "+P$/;"	m
+<leader>P	basic.vim	/^vmap <leader>P "+P$/;"	m
+<leader>d	basic.vim	/^vmap <leader>d "+d$/;"	m
+<leader>p	basic.vim	/^nmap <leader>p "+p$/;"	m
+<leader>p	basic.vim	/^vmap <leader>p "+p$/;"	m
+<leader>rc	basic.vim	/^nnoremap <leader>rc :source $MYVIMRC<cr> $/;"	m
+<leader>y	basic.vim	/^nmap <leader>y "+y$/;"	m
+<leader>y	basic.vim	/^vmap <leader>y "+y$/;"	m
+Lua.telemetry.enable	coc-settings.json	/^  "Lua.telemetry.enable": true$/;"	b
+args	coc-settings.json	/^      "args": [$/;"	a	object:diagnostic-languageserver.formatters.php-cs-fixer
+blade	coc-settings.json	/^    "blade": "blade-formatter",$/;"	s	object:diagnostic-languageserver.formatFiletypes
+cmake	coc-settings.json	/^    "cmake": "cmake-format"$/;"	s	object:diagnostic-languageserver.formatFiletypes
+command	coc-settings.json	/^      "command": ".\/vendor\/bin\/php-cs-fixer",$/;"	s	object:diagnostic-languageserver.formatters.php-cs-fixer
+command	coc-settings.json	/^      "command": "gopls",$/;"	s	object:languageserver.go
+command	coc-settings.json	/^      "command": "shfmt",$/;"	s	object:diagnostic-languageserver.formatters.shfmt
+dart	coc-settings.json	/^    "dart": "dartfmt",$/;"	s	object:diagnostic-languageserver.formatFiletypes
+diagnostic-languageserver.formatFiletypes	coc-settings.json	/^  "diagnostic-languageserver.formatFiletypes": {$/;"	o
+diagnostic-languageserver.formatters	coc-settings.json	/^  "diagnostic-languageserver.formatters": {$/;"	o
+eelixir	coc-settings.json	/^    "eelixir": "mix_format",$/;"	s	object:diagnostic-languageserver.formatFiletypes
+elixir	coc-settings.json	/^    "elixir": "mix_format",$/;"	s	object:diagnostic-languageserver.formatFiletypes
+filetypes	coc-settings.json	/^      "filetypes": ["go"]$/;"	a	object:languageserver.go
+go	coc-settings.json	/^    "go": {$/;"	o	object:languageserver
+jk	basic.vim	/^inoremap jk <esc>$/;"	m
+languageserver	coc-settings.json	/^  "languageserver": {$/;"	o
+mapleader	basic.vim	/^let mapleader = "\\<Space>"$/;"	v
+numbertoggle	basic.vim	/^augroup numbertoggle$/;"	a
+path	init.vim	/^let path = stdpath('config')$/;"	v
+php-cs-fixer	coc-settings.json	/^    "php-cs-fixer": {$/;"	o	object:diagnostic-languageserver.formatters
+python	coc-settings.json	/^    "python": ["black", "isort"],$/;"	a	object:diagnostic-languageserver.formatFiletypes
+rootPatterns	coc-settings.json	/^      "rootPatterns": ["go.mod"],$/;"	a	object:languageserver.go
+sh	coc-settings.json	/^    "sh": "shfmt",$/;"	s	object:diagnostic-languageserver.formatFiletypes
+shfmt	coc-settings.json	/^    "shfmt": {$/;"	o	object:diagnostic-languageserver.formatters
+trace.server	coc-settings.json	/^      "trace.server": "verbose",$/;"	s	object:languageserver.go
