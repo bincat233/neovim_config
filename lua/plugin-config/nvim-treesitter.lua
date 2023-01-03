@@ -1,11 +1,11 @@
 local treesitter = safe_require("nvim-treesitter.configs")
-local keybindings = safe_require("keybindings")
-if not treesitter or not keybindings then return end
+local keys = require("keybindings")
+if not treesitter or not keys then return end
 
 treesitter.setup({
 	-- 安装 language parser
 	-- :TSInstallInfo 命令查看支持的语言
-	ensure_installed = { "c", "cpp", "rust", "json", "html", "css", "vim", "lua", "javascript", "typescript", "tsx" },
+	ensure_installed = { "comment", "c", "cpp", "rust", "json", "html", "css", "vim", "lua", "javascript", "typescript", "tsx" },
 	--ensure_installed = 'all',
 	-- 启用代码高亮模块
 	highlight = {
@@ -15,7 +15,8 @@ treesitter.setup({
 	-- 启用增量选择模块
 	incremental_selection = {
 		enable = true,
-		keybindings.ts_selection_keys,
+		-- NOTE: Set keybindings in ~/.config/nvim/lua/keybindings.lua
+		keymaps = keys.ts_selection_keys,
 	},
 	-- 启用代码缩进模块 (=)
 	indent = {
@@ -39,3 +40,5 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- 默认不要折叠
 -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
 vim.opt.foldlevel = 99
+
+keys.ts_keys_setup()

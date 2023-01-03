@@ -5,7 +5,7 @@
 local mason = require("mason")
 local mason_config = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
-local keymap = require("keybindings")
+local keys = require("keybindings")
 
 if not mason or not mason_config or not lspconfig then
 	vim.notify("mason, mason-lspconfig, and lspconfig are required for this plugin to work", vim.log.levels.ERROR)
@@ -57,7 +57,7 @@ local handlers = {
 			flags = common.flags,
 			on_attach = function(client, bufnr)
 				common.disableFormat(client)
-				keymap.lsp_on_attach_keys_setup(bufnr)
+				keys.lsp_on_attach_keys_setup(bufnr)
 			end,
 			settings = {
 				Lua = {
@@ -100,4 +100,4 @@ mason_config.setup_handlers(handlers)
 require('lsp.ui')
 
 -- Setup keybindings
-keymap.lsp_globe_keys_setup()
+keys.lsp_globe_keys_setup()

@@ -2,10 +2,9 @@ local M = {
   config_path = vim.fn.stdpath("config"),
 
   keys = {
-
     leader_key = " ",
 
-    -- : 模式
+    -- For Command mode
     c_next_item = "<C-j>",
     c_prev_item = "<C-k>",
 

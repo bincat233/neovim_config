@@ -26,46 +26,53 @@ packer.startup({
 		-- Packer 可以管理自己本身
 		use 'wbthomason/packer.nvim'
 		-- ------------------------------- Plugins -------------------------------
-		-- Colorschemes
-		use 'cocopon/iceberg.vim'
+		-- Colorschemes and themes
+		use 'cocopon/iceberg.vim' -- My favorite colorscheme with best light theme
 		use 'shaunsingh/seoul256.nvim'
-		use 'altercation/vim-colors-solarized'
+		use 'folke/tokyonight.nvim' -- Has good support for treesitter
+		use 'altercation/vim-colors-solarized' -- Has good support under TTYs
 		use 'catppuccin/nvim'
 		use 'projekt0n/github-nvim-theme'
 		use { -- File explorer
 			"nvim-tree/nvim-tree.lua", requires = "nvim-tree/nvim-web-devicons", tag = 'nightly',
-			-- TODO: ~/.config/nvim/lua/plugin-config/nvim-tree.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-tree.lua
 			config = function() require('plugin-config.nvim-tree') end,
 		}
 		use { -- Bufferline
 			"akinsho/bufferline.nvim",
 			requires = { "nvim-tree/nvim-web-devicons", "moll/vim-bbye" },
-			-- TODO: ~/.config/nvim/lua/plugin-config/bufferline.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/bufferline.lua
 			config = function() require('plugin-config.bufferline') end,
 		}
 		use { -- Statusline
 			"nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons" },
-			-- TODO: ~/.config/nvim/lua/plugin-config/lualine.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/lualine.lua
 			config = function() require('plugin-config.lualine') end
 		}
 		use("arkav/lualine-lsp-progress")
-		use { -- Highlight
+		---------------- Highlight (treesitter) ----------------
+		use {
 			"nvim-treesitter/nvim-treesitter", run = ":TSUpdate",
-			-- TODO: ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
 			config = function() require('plugin-config.nvim-treesitter') end
 		}
 		use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
+		use {
+		  "folke/todo-comments.nvim",
+		  requires = "nvim-lua/plenary.nvim",
+		  config = function() require('plugin-config.todo-comments') end
+		}
 
 		------------------------- LSP -------------------------
 		-- Manage LSP / DAP / Formatter / Linter. Don't change the order.
-		-- TODO: ~/.config/nvim/lua/lsp/setup.lua
+		-- NOTE: ~/.config/nvim/lua/lsp/setup.lua
 		use {
 			"williamboman/mason.nvim", -- LSP Installer
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig", -- LSP Config
 		}
 		-- Completion Engine
-		-- TODO: ~/.config/nvim/lua/cmp/setup.lua
+		-- NOTE: ~/.config/nvim/lua/cmp/setup.lua
 		use("hrsh7th/nvim-cmp")
 		-- Snippet Engine
 		use("L3MON4D3/LuaSnip")
@@ -88,20 +95,28 @@ packer.startup({
 		-- Misc
 		use { -- Colorizer
 			"norcalli/nvim-colorizer.lua",
-			-- TODO: ~/.config/nvim/lua/plugin-config/colorizer.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/colorizer.lua
 			config = function() require('plugin-config.colorizer') end
 		}
-		use 'github/copilot.vim'
+		use { 'github/copilot.vim',
+			config = function()
+				local keys = require('keybindings')
+				keys.copilot_keys_config()
+			end
+		}
 		use 'tpope/vim-sensible'
 		use { -- A better user experience for interacting with and manipulating Vim marks.
 			'chentoast/marks.nvim',
-			-- TODO: ~/.config/nvim/lua/plugin-config/marks.lua
+			-- NOTE: ~/.config/nvim/lua/plugin-config/marks.lua
 			config = function() require('plugin-config.marks') end
 		}
 		use { -- If not under neovide, use beacon.nvim to highlight cursor
 			'DanilaMihailov/beacon.nvim',
+			-- NOTE: ~/.config/nvim/lua/plugin-config/beacon.lua
 			config = function() require('plugin-config.beacon') end
 		}
+
+		-- Scrollbar
 		--use {"petertriho/nvim-scrollbar", config=function() require("scrollbar").setup() end}
 		use("dstein64/nvim-scrollview")
 

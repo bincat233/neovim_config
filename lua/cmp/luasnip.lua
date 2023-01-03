@@ -1,7 +1,7 @@
 local ls = safe_require("luasnip")
-local keybindings = safe_require("keybindings")
+local keys = require("keybindings")
 local types = safe_require("luasnip.util.types")
-if not ls or not keybindings or not types then return end
+if not ls or not keys or not types then return end
 
 -- custom snippets
 safe_require("luasnip.loaders.from_lua").load({
@@ -29,4 +29,5 @@ ls.config.set_config({
 	},
 })
 
-keybindings.luasnip_keys_setup()
+-- ~/.config/nvim/lua/keybindings.lua
+keys.luasnip_keys_setup()

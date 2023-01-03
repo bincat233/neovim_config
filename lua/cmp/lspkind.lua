@@ -1,8 +1,8 @@
 local status, lspkind = pcall(require, "lspkind")
-if not status then
-  return
-end
+if not status then return end
 
+-- To configuration, follow this link
+-- https://github.com/onsails/lspkind.nvim#configuration
 lspkind.init({
   -- default: true
   -- with_text = true,
@@ -50,6 +50,7 @@ lspkind.init({
 
 local M = {}
 -- 为 cmp.lua 提供参数格式
+-- Provide parameters for ~/.config/nvim/lua
 M.formatting = {
   format = lspkind.cmp_format({
     mode = "symbol_text",

@@ -112,6 +112,13 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 
+" Turn on wrapping when editing text files
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+	autocmd FileType text setlocal wrap
+augroup END
+
 """""""""""""""""""" Some Basic Keybinding """"""""""""""""""""
 " Set leader key to space (someone may use , or " )
 " If having any conflict, checking with `:verbose map <leader>`

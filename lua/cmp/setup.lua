@@ -4,8 +4,8 @@
 local cmp=safe_require("cmp")
 local luasnip=safe_require("luasnip")
 local config=safe_require("uConfig")
-local keybindings = safe_require("keybindings")
-if not cmp or not luasnip or not config or not keybindings then return end
+local keys = require("keybindings")
+if not cmp or not luasnip or not config or not keys then return end
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -23,9 +23,10 @@ cmp.setup({
 		-- completion = cmp.config.window.bordered(),
 		-- documentation = cmp.config.window.bordered(),
 	},
-	-- 快捷键
+	-- NOTE: 快捷键
 	-- Mapping in the keybindings.lua
-	mapping = keybindings.cmp_keys,
+	-- ~/.config/nvim/lua/keybindings.lua
+	mapping = cmp.mapping.preset.insert(keys.cmp_keys),
 	-- 来源
 	sources = cmp.config.sources({
 		{
@@ -50,7 +51,8 @@ cmp.setup({
 		},
 	}),
 
-	-- 使用lspkind-nvim显示类型图标
+	-- NOTE: 使用lspkind-nvim显示类型图标
+	-- ~/.config/nvim/lua/cmp/lspkind.lua
 	formatting = require("cmp.lspkind").formatting,
 })
 

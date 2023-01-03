@@ -52,10 +52,6 @@ keymap("x", "K", ":move '<-2<CR>gv-gv")
 -- 在visual mode 里粘贴不要复制
 keymap("x", "p", '"_dP')
 
--- treesitter 折叠
-keymap("n", keys.fold.open, ":foldopen<CR>")
-keymap("n", keys.fold.close, ":foldclose<CR>")
-
 -- Esc 回 Normal 模式
 keymap("t", keys.terminal_to_normal, "<C-\\><C-n>")
 
@@ -97,12 +93,27 @@ M.nvim_tree_keys={
 }
 
 -- For Treesitter module: Incremental selection
+-- https://github.com/nvim-treesitter/nvim-treesitter#incremental-selection
+-- ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
 M.ts_selection_keys = {
-	init_selection = "<C-RightMouse>",
-	node_incremental = "<C-RightMouse>",
-	node_decremental = "<C-LeftMouse>",
-	scope_incremental = "<TAB>",
+	init_selection = "gnn", -- set to `false` to disable one of the mappings
+	node_incremental = "grn",
+	scope_incremental = "grc",
+	node_decremental = "grm",
 }
+
+M.ts_keys_setup = function()
+	-- Treesitter 折叠
+	--keymap("n", keys.fold.open, ":foldopen<CR>")
+	--keymap("n", keys.fold.close, ":foldclose<CR>")
+	-- Treesitter incremental selection
+	vim.keymap.set("n", "<A-LeftMouse>", "gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("n", "<A-RightMouse>", "gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("v", "<A-LeftMouse>", "grn", {remap = true, silent = true})
+	vim.keymap.set("v", "<Tab>", "grn", {remap = true, silent = true}) -- Tab to expand selection
+	vim.keymap.set("v", "<A-RightMouse>", "grm", {remap = true, silent = true}) -- Alt-RightMouse to reduce selection
+	vim.keymap.set("v", "<S-Tab>", "grm", {remap = true, silent = true}) -- Shift-Tab to reduce selection
+end
 
 -- For LuaSnip module: Snippet Navigation
 -- https://github.com/L3MON4D3/LuaSnip#keymaps
@@ -131,11 +142,14 @@ M.luasnip_keys_setup = function()
 end
 
 -- For nvim-cmp module: Autocomplete
+-- ~/.config/nvim/lua/cmp/setup.lua
+-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion#nvim-cmp
 local cmp = safe_require("cmp")
 if cmp then
 	M.cmp_keys = {
 		-- 出现补全
 		["<A-.>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }), -- ME: Like IDEA
 		-- 取消
 		["<A-,>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
@@ -145,8 +159,8 @@ if cmp then
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({
-			select = true,
 			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
 		}),
 		-- 如果窗口内容太多，可以滚动
 		["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
@@ -154,9 +168,19 @@ if cmp then
 
 		-- 上一个
 		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<Up>"] = cmp.mapping.select_prev_item(),
 		-- 下一个
 		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<Down>"] = cmp.mapping.select_next_item(),
 	}
+end
+
+-- For Copilot
+M.copilot_keys_config = function ()
+	-- Map <M-Bslash> to toggle copilot
+	vim.cmd [[
+	inoremap <expr> <M-Bslash> copilot#GetDisplayedSuggestion().text == "" ? copilot#Suggest() : copilot#Dismiss()
+	]]
 end
 
 -- For nvim-lspconfig module: LSP
@@ -173,6 +197,7 @@ M.lsp_globe_keys_setup = function()
 end
 
 M.lsp_on_attach_keys_setup = function(bufnr)
+	-- Also copy from https://github.com/neovim/nvim-lspconfig#suggested-configuration
 	-- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- Mappings.
@@ -193,6 +218,23 @@ M.lsp_on_attach_keys_setup = function(bufnr)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
+
+M.todo_comments_keys_setup = function()
+	-- Copy from https://github.com/folke/todo-comments.nvim#jumping
+	vim.keymap.set("n", "]t", function()
+		require("todo-comments").jump_next()
+	end, { desc = "Next todo comment" })
+
+	vim.keymap.set("n", "[t", function()
+		require("todo-comments").jump_prev()
+	end, { desc = "Previous todo comment" })
+
+	-- You can also specify a list of valid jump keywords
+	vim.keymap.set("n", "]t", function()
+		require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+	end, { desc = "Next error/warning todo comment" })
+
 end
 
 return M
