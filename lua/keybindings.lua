@@ -197,6 +197,7 @@ M.lsp_globe_keys_setup = function()
 end
 
 M.lsp_on_attach_keys_setup = function(bufnr)
+	-- See also: https://github.com/junnplus/lsp-setup.nvim#setup-structure
 	-- Also copy from https://github.com/neovim/nvim-lspconfig#suggested-configuration
 	-- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

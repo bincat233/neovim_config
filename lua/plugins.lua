@@ -67,6 +67,7 @@ packer.startup({
 		-- Manage LSP / DAP / Formatter / Linter. Don't change the order.
 		-- NOTE: ~/.config/nvim/lua/lsp/setup.lua
 		use {
+			"junnplus/lsp-setup.nvim",
 			"williamboman/mason.nvim", -- LSP Installer
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig", -- LSP Config

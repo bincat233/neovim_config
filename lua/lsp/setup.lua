@@ -37,35 +37,71 @@ mason_config.setup({
 	},
 })
 
--- Automatic server setup
--- See `:h mason-lspconfig-automatic-server-setup`
-local handlers = {
-	-- The first entry (without a key) will be the default handler
-	-- and will be called for each installed server that doesn't have
-	-- a dedicated handler.
-	function (server_name) -- default handler (optional)
-		require("lspconfig")[server_name].setup {}
-	end,
-	---- Next, you can provide targeted overrides for specific servers. For example:
-	["sumneko_lua"] = function ()
-		local runtime_path = vim.split(package.path, ";")
-		table.insert(runtime_path, "lua/?.lua")
-		table.insert(runtime_path, "lua/?/init.lua")
-		local common = require("lsp.common-config")
-		lspconfig.sumneko_lua.setup {
-			capabilities = common.capabilities,
-			flags = common.flags,
-			on_attach = function(client, bufnr)
-				common.disableFormat(client)
+local lua_runtime_path = vim.split(package.path, ";")
+table.insert(lua_runtime_path, "lua/?.lua")
+table.insert(lua_runtime_path, "lua/?/init.lua")
+
+require('lsp-setup').setup({
+    -- Default mappings
+    -- gD = 'lua vim.lsp.buf.declaration()',
+    -- gd = 'lua vim.lsp.buf.definition()',
+    -- gt = 'lua vim.lsp.buf.type_definition()',
+    -- gi = 'lua vim.lsp.buf.implementation()',
+    -- gr = 'lua vim.lsp.buf.references()',
+    -- K = 'lua vim.lsp.buf.hover()',
+    -- ['<C-k>'] = 'lua vim.lsp.buf.signature_help()',
+    -- ['<space>rn'] = 'lua vim.lsp.buf.rename()',
+    -- ['<space>ca'] = 'lua vim.lsp.buf.code_action()',
+    -- ['<space>f'] = 'lua vim.lsp.buf.formatting()',
+    -- ['<space>e'] = 'lua vim.diagnostic.open_float()',
+    -- ['[d'] = 'lua vim.diagnostic.goto_prev()',
+    -- [']d'] = 'lua vim.diagnostic.goto_next()',
+    default_mappings = true,
+    -- Custom mappings, will overwrite the default mappings for the same key
+    -- Example mappings for telescope pickers:
+    -- gd = 'lua require"telescope.builtin".lsp_definitions()',
+    -- gi = 'lua require"telescope.builtin".lsp_implementations()',
+    -- gr = 'lua require"telescope.builtin".lsp_references()',
+    mappings = {},
+    -- Global on_attach
+    on_attach = function(client, bufnr)
+				-- NOTE: Set key in ~/.config/nvim/lua/keybindings.lua
 				keys.lsp_on_attach_keys_setup(bufnr)
-			end,
+        -- Support custom the on_attach function for global
+        -- Formatting on save as default
+        --require('lsp-setup.utils').format_on_save(client)
+        require('lsp-setup.utils').disable_formatting(client)
+    end,
+    -- Global capabilities
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+		flags = { debounce_text_changes = 150},
+	
+    -- Configuration of LSP servers 
+	servers = {
+		-- Install LSP servers automatically
+		-- LSP server configuration please see: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+		-- https://github.com/nshen/learn-neovim-lua/tree/v2/lua/lsp/config
+		-- pylsp = {},
+		rust_analyzer = {
+			settings = {
+				['rust-analyzer'] = {
+					cargo = {
+						loadOutDirsFromCheck = true,
+					},
+					procMacro = {
+						enable = true,
+					},
+				},
+			},
+		},
+		sumneko_lua = {
 			settings = {
 				Lua = {
 					runtime = {
 						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 						version = "LuaJIT",
 						-- Setup your lua path
-						path = runtime_path,
+						path = lua_runtime_path,
 					},
 					diagnostics = {
 						-- Get the language server to recognize the `vim` global
@@ -81,21 +117,11 @@ local handlers = {
 						enable = false,
 					},
 				},
-			},
-		}
-	end,
-}
--- Loop through all files in the lsp config directory (~/.config/nvim/lua/lsp/config)
--- file name must be the same as the server name in this url (Use `gx` to open the link)
--- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
-for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath('config')..'/lua/lsp/config', [[v:val =~ '\.lua$']])) do
-	local server_name = file:match('(.*)%.lua')
-	--vim.notify("LSP " .. server_name .. " setup", vim.log.levels.INFO)
-	handlers[server_name] = function ()
-		require('lsp.config.'..server_name).on_setup(lspconfig[server_name])
-	end
-end
-mason_config.setup_handlers(handlers)
+			}
+		},
+
+	},
+})
 
 require('lsp.ui')
 
