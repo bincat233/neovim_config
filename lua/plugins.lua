@@ -89,7 +89,10 @@ packer.startup({
 		use("rafamadriz/friendly-snippets")
 		-- UI 
 		use("onsails/lspkind-nvim")
-    use("tami5/lspsaga.nvim")
+    use({
+			"glepnir/lspsaga.nvim",
+			config = function() require('lsp.lspsaga') end
+		})
 		-- Code Formatter
 		use("mhartington/formatter.nvim")
     use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
@@ -98,6 +101,11 @@ packer.startup({
 			"norcalli/nvim-colorizer.lua",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/colorizer.lua
 			config = function() require('plugin-config.colorizer') end
+		}
+		use { -- Indent (缩进线)
+			"lukas-reineke/indent-blankline.nvim",
+			-- NOTE: ~/.config/nvim/lua/plugin-config/indent-blankline.lua
+			config = function() require('plugin-config.indent-blankline') end
 		}
 		use { 'github/copilot.vim',
 			config = function()

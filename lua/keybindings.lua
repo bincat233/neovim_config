@@ -165,6 +165,8 @@ if cmp then
 		-- 如果窗口内容太多，可以滚动
 		["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-8), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(8), { "i", "c" }),
 
 		-- 上一个
 		["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -188,17 +190,27 @@ M.lsp_globe_keys_setup = function()
 	-- Diagnostic keys, copy from https://github.com/neovim/nvim-lspconfig#suggested-configuration
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 	local opts = { noremap=true, silent=true }
-	vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
+	-- Default keymap options
+	--vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+	--vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+	--vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+	--vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+
+	-- Lspsaga keys
+	local bmap = vim.api.nvim_buf_set_keymap
+	bmap(0, "n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
 	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
-	-- Config from nshen
-	keymap("n", keys.format, "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
 M.lsp_on_attach_keys_setup = function(bufnr)
 	-- See also: https://github.com/junnplus/lsp-setup.nvim#setup-structure
 	-- Also copy from https://github.com/neovim/nvim-lspconfig#suggested-configuration
+
+	-- NOTE: Global keys: For all conditions
+
 	-- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- Mappings.
@@ -206,7 +218,6 @@ M.lsp_on_attach_keys_setup = function(bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -215,10 +226,38 @@ M.lsp_on_attach_keys_setup = function(bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+	-- NOTE: Only for lspconfig default version
+  --vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  --vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  --vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+
+	-- NOTE: Only for lspsaga, See: https://github.com/kkharji/lspsaga.nvim#example-keymapings
+	-- My keymap follows the default keymap of lspconfig, and diagnostic keys setted in lsp_globe_keys_setup()
+	local bmap = vim.api.nvim_buf_set_keymap
+	bmap(0, "n", "<leader>rn", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
+	bmap(0, "x", "<leader>ca", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
+	bmap(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+
+	-- NOTE: Only for telescope
+  -- go xx
+  --mapbuf("n", lsp.definition, function()
+  --  require("telescope.builtin").lsp_definitions({
+  --    initial_mode = "normal",
+  --    -- ignore_filename = false,
+  --  })
+  --end)
+
+  --mapbuf(
+  --  "n",
+  --  lsp.references,
+  --  "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_ivy())<CR>"
+  --)
 end
 
 M.todo_comments_keys_setup = function()
