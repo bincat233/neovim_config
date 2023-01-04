@@ -29,3 +29,18 @@ else -- If under GUI
 	) -- Set colorscheme to iceberg
 	vim.o.background = "light"
 end
+
+-- 变量名高亮
+vim.cmd [[
+" highlight the definition of a variable
+hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#acc5dc
+hi def IlluminatedWordWrite guibg=#acc5dc
+
+" highlight the usage of a variable
+hi LspReferenceRead cterm=bold ctermbg=LightYellow guibg=#ced9e1
+hi def IlluminatedWordRead guibg=#ced9e1
+
+" highlight the text of a variable
+hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#e3d2da
+hi def IlluminatedWordText guibg=#e3d2da
+]]

@@ -134,6 +134,9 @@ packer.startup({
 		    'nvim-lua/plenary.nvim'
 		  }
 		}
+
+		-- 变量名高亮 https://github.com/RRethy/vim-illuminate
+		use { 'RRethy/vim-illuminate' }
 		-- Scrollbar
 		--use {"petertriho/nvim-scrollbar", config=function() require("scrollbar").setup() end}
 		use("dstein64/nvim-scrollview")

@@ -1,5 +1,7 @@
 " The Neovim basic configuration
 " Contains the configurations withouth plugins
+"
+set updatetime=800
 
 " Set the mouse menu
 " Remove the default menu

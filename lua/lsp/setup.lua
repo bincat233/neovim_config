@@ -64,14 +64,36 @@ require('lsp-setup').setup({
     -- gr = 'lua require"telescope.builtin".lsp_references()',
     mappings = {},
     -- Global on_attach
-    on_attach = function(client, bufnr)
-				-- NOTE: Set key in ~/.config/nvim/lua/keybindings.lua
-				keys.lsp_on_attach_keys_setup(bufnr)
-        -- Support custom the on_attach function for global
-        -- Formatting on save as default
-        --require('lsp-setup.utils').format_on_save(client)
-        require('lsp-setup.utils').disable_formatting(client)
-    end,
+	on_attach = function(client, bufnr)
+		-- NOTE: Set key in ~/.config/nvim/lua/keybindings.lua
+		keys.lsp_on_attach_keys_setup(bufnr)
+		-- Support custom the on_attach function for global
+		-- Formatting on save as default
+		--require('lsp-setup.utils').format_on_save(client)
+		require('lsp-setup.utils').disable_formatting(client)
+
+		---- TODO: 临时的变量高亮方案
+		--if client.server_capabilities.documentHighlightProvider then
+		--	vim.api.nvim_exec([[
+		--	]], false)
+		--	local group = vim.api.nvim_create_augroup("LSPDocumentHighlight", {})
+		--	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+		--		buffer = 0,
+		--		group = group,
+		--		callback = function()
+		--			vim.lsp.buf.document_highlight()
+		--		end,
+		--	})
+		--	vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+		--		buffer = 0,
+		--		group = group,
+		--		callback = function()
+		--			vim.lsp.buf.clear_references()
+		--		end,
+		--	})
+		--end
+
+	end,
     -- Global capabilities
     capabilities = vim.lsp.protocol.make_client_capabilities(),
 		flags = { debounce_text_changes = 150},

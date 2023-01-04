@@ -96,10 +96,10 @@ M.nvim_tree_keys={
 -- https://github.com/nvim-treesitter/nvim-treesitter#incremental-selection
 -- ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
 M.ts_selection_keys = {
-	init_selection = "gnn", -- set to `false` to disable one of the mappings
-	node_incremental = "grn",
-	scope_incremental = "grc",
-	node_decremental = "grm",
+	init_selection = "<Plug>gnn", -- set to `false` to disable one of the mappings
+	node_incremental = "<Plug>grn",
+	scope_incremental = "<Plug>grc",
+	node_decremental = "<Plug>grm",
 }
 
 M.ts_keys_setup = function()
@@ -107,12 +107,12 @@ M.ts_keys_setup = function()
 	--keymap("n", keys.fold.open, ":foldopen<CR>")
 	--keymap("n", keys.fold.close, ":foldclose<CR>")
 	-- Treesitter incremental selection
-	vim.keymap.set("n", "<A-LeftMouse>", "gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
-	vim.keymap.set("n", "<A-RightMouse>", "gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
-	vim.keymap.set("v", "<A-LeftMouse>", "grn", {remap = true, silent = true})
-	vim.keymap.set("v", "<Tab>", "grn", {remap = true, silent = true}) -- Tab to expand selection
-	vim.keymap.set("v", "<A-RightMouse>", "grm", {remap = true, silent = true}) -- Alt-RightMouse to reduce selection
-	vim.keymap.set("v", "<S-Tab>", "grm", {remap = true, silent = true}) -- Shift-Tab to reduce selection
+	vim.keymap.set("n", "<A-LeftMouse>", "<Plug>gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("n", "<A-RightMouse>", "<Plug>gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("v", "<A-LeftMouse>", "<Plug>grn", {remap = true, silent = true})
+	vim.keymap.set("v", "<Tab>", "<Plug>grn", {remap = true, silent = true}) -- Tab to expand selection
+	vim.keymap.set("v", "<A-RightMouse>", "<Plug>grm", {remap = true, silent = true}) -- Alt-RightMouse to reduce selection
+	vim.keymap.set("v", "<S-Tab>", "<Plug>grm", {remap = true, silent = true}) -- Shift-Tab to reduce selection
 end
 
 -- For LuaSnip module: Snippet Navigation
