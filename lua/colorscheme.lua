@@ -20,6 +20,7 @@ if os.getenv('DISPLAY') == nil and os.getenv('SSH_TTY') == nil then -- If under 
 else -- If under GUI
 	set_cs(
 		"iceberg",
+		"tokyonight-day",
 		"catppuccin-latte",
 		"github-theme",
 		"seoul256",

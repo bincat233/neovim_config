@@ -91,7 +91,8 @@ packer.startup({
 		use("onsails/lspkind-nvim")
     use({
 			"glepnir/lspsaga.nvim",
-			config = function() require('lsp.lspsaga') end
+			-- NOTE: ~/.config/nvim/lua/lsp/lspsaga.lua
+			config = function() require('lsp.lspsaga') end,
 		})
 		-- Code Formatter
 		use("mhartington/formatter.nvim")
@@ -125,6 +126,14 @@ packer.startup({
 			config = function() require('plugin-config.beacon') end
 		}
 
+		use {
+			'lewis6991/gitsigns.nvim',
+			-- NOTE: ~/.config/nvim/lua/plugin-config/gitsigns.lua
+			config = function() require('plugin-config.gitsigns') end,
+		  requires = {
+		    'nvim-lua/plenary.nvim'
+		  }
+		}
 		-- Scrollbar
 		--use {"petertriho/nvim-scrollbar", config=function() require("scrollbar").setup() end}
 		use("dstein64/nvim-scrollview")

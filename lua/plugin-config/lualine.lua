@@ -10,7 +10,6 @@ lualine.setup({
     section_separators = { left = " ", right = "" },
 		globalstatus = true,
   },
-  extensions = { "nvim-tree", "toggleterm" },
   sections = {
     lualine_c = {
       "filename",
@@ -21,6 +20,7 @@ lualine.setup({
     },
     lualine_x = {
       "filesize",
+      "encoding",
       {
         "fileformat",
         symbols = {
@@ -29,10 +29,16 @@ lualine.setup({
           mac  = ' CR', -- e711
         },
       },
-      "encoding",
       "filetype",
     },
   },
+  extensions = { "nvim-tree", "toggleterm" },
+	winbar = {
+		--{
+		--	winbar.get_winbar,
+		--	color = { fg = colors.violet, gui = "bold" },
+		--},
+	},
 })
 
 vim.o.showmode = false -- 不显示 vim 原生的模式提示

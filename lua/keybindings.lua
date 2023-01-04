@@ -260,6 +260,7 @@ M.lsp_on_attach_keys_setup = function(bufnr)
   --)
 end
 
+-- NOTE: ~/.config/nvim/lua/plugin-config/todo-comments.lua
 M.todo_comments_keys_setup = function()
 	-- Copy from https://github.com/folke/todo-comments.nvim#jumping
 	vim.keymap.set("n", "]t", function()
@@ -271,9 +272,9 @@ M.todo_comments_keys_setup = function()
 	end, { desc = "Previous todo comment" })
 
 	-- You can also specify a list of valid jump keywords
-	vim.keymap.set("n", "]t", function()
-		require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
-	end, { desc = "Next error/warning todo comment" })
+	--vim.keymap.set("n", "]t", function()
+	--	require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+	--end, { desc = "Next error/warning todo comment" })
 
 end
 
