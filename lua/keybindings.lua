@@ -318,4 +318,15 @@ M.gitsigns_keys_setup = function(bufnr)
 	map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 end
 
+M.aerial_keys_setup = function(bufnr)
+  -- Jump forwards/backwards with '{' and '}'
+	vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+	vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+end
+
+M.aerial_global_keys_setup = function()
+	-- Open/close the Aerial window with '<C-t>'
+	vim.keymap.set('n', '<A-j>', '<cmd>AerialToggle!<CR>')
+end
+
 return M

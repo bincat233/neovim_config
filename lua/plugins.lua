@@ -94,15 +94,19 @@ packer.startup({
 			-- NOTE: ~/.config/nvim/lua/lsp/lspsaga.lua
 			config = function() require('lsp.lspsaga') end,
 		})
+    use {
+      'stevearc/aerial.nvim',
+			-- NOTE: ~/.config/nvim/lua/plugin-config/aerial.lua
+      config = function() require('plugin-config.aerial') end
+    }
 		-- Code Formatter
 		use("mhartington/formatter.nvim")
     use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
 		-- Misc
-		use { -- Colorizer
-			"norcalli/nvim-colorizer.lua",
-			-- NOTE: ~/.config/nvim/lua/plugin-config/colorizer.lua
-			config = function() require('plugin-config.colorizer') end
-		}
+		use{
+			"uga-rosa/ccc.nvim",
+			config = function() require('plugin-config.ccc') end,
+		} -- Colorizer / Color Picker
 		use { -- Indent (缩进线)
 			"lukas-reineke/indent-blankline.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/indent-blankline.lua

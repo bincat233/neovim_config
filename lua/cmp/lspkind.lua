@@ -50,7 +50,7 @@ lspkind.init({
 
 local M = {}
 -- 为 cmp.lua 提供参数格式
--- Provide parameters for ~/.config/nvim/lua
+--
 M.formatting = {
   format = lspkind.cmp_format({
     mode = "symbol_text",

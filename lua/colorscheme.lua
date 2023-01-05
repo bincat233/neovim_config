@@ -33,14 +33,14 @@ end
 -- 变量名高亮
 vim.cmd [[
 " highlight the definition of a variable
-hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#acc5dc
-hi def IlluminatedWordWrite guibg=#acc5dc
+hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#AFBBD6 
+hi def IlluminatedWordWrite guibg=#AFBBD6
 
 " highlight the usage of a variable
-hi LspReferenceRead cterm=bold ctermbg=LightYellow guibg=#ced9e1
-hi def IlluminatedWordRead guibg=#ced9e1
+hi LspReferenceRead cterm=bold ctermbg=LightYellow guibg=#CCD2E1
+hi def IlluminatedWordRead guibg=#CCD2E1
 
 " highlight the text of a variable
-hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#e3d2da
-hi def IlluminatedWordText guibg=#e3d2da
+hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#DFE1E8 
+hi def IlluminatedWordText guibg=#CCD2E1
 ]]
