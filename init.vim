@@ -243,6 +243,7 @@ nnoremap <F9> :Format<CR>
 
 """"" <F10> Nerdtree """""
 noremap <F10> :NERDTreeToggle<CR>
+noremap <A-f> :NERDTreeToggle<CR>
 
 """"" <F10> 切换 asyncrun 的 Quickfix 窗口 """""
 "nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
