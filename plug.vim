@@ -51,10 +51,10 @@ Plug 'luochen1990/rainbow'              " 彩虹括号
 "Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮
 "Plug 'Yggdroot/indentLine'              " 缩进线
 Plug 'tpope/vim-surround'    " 增强配对符号编辑(快速加括号等), 文本对象s
-Plug 'ludovicchabant/vim-gutentags' " Gtag client
-Plug 'skywind3000/gutentags_plus'   " 数据库无缝切换
-Plug 'skywind3000/asyncrun.vim'     " 异步命令
-Plug 'skywind3000/asynctasks.vim'   " 异步tasks
+"Plug 'ludovicchabant/vim-gutentags' " Gtag client
+"Plug 'skywind3000/gutentags_plus'   " 数据库无缝切换
+"Plug 'skywind3000/asyncrun.vim'     " 异步命令
+"Plug 'skywind3000/asynctasks.vim'   " 异步tasks
 "Plug 'puremourning/vimspector'     " 调试器!!!
 Plug 'easymotion/vim-easymotion'    " 快速跳转
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }   " 搜索插件
