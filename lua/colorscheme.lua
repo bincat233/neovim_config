@@ -30,8 +30,8 @@ else -- If under GUI
 	vim.o.background = "light"
 end
 
--- 变量名高亮
 vim.cmd [[
+" 变量名高亮
 " highlight the definition of a variable
 hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#AFBBD6 
 hi def IlluminatedWordWrite guibg=#AFBBD6
@@ -43,4 +43,7 @@ hi def IlluminatedWordRead guibg=#CCD2E1
 " highlight the text of a variable
 hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#DFE1E8 
 hi def IlluminatedWordText guibg=#CCD2E1
+
+" 自动补全弃用方法添加删除线
+highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#8389a3
 ]]

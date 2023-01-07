@@ -71,8 +71,9 @@ require('lsp-setup').setup({
 		-- Formatting on save as default
 		--require('lsp-setup.utils').format_on_save(client)
 		require('lsp-setup.utils').disable_formatting(client)
-
-		---- TODO: 临时的变量高亮方案
+		-- For Signature Help (函数参数提示)
+		require("lsp.lsp_signature").setup(bufnr)
+		---- 临时的变量高亮方案
 		--if client.server_capabilities.documentHighlightProvider then
 		--	vim.api.nvim_exec([[
 		--	]], false)
@@ -130,7 +131,10 @@ require('lsp-setup').setup({
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = { enable = false, },
 			}, }, },
-		clangd = { cmd = { "/usr/bin/clangd", "--background-index", } },
+		clangd = {
+			cmd = { "/usr/bin/clangd", "--background-index", "--offset-encoding=utf-16" },
+			capabilities = { offsetEncoding = "utf-16"}
+		},
 		cssls = { settings = {
 			css = { validate = true,
 				-- tailwindcss

@@ -49,20 +49,24 @@ packer.startup({
 			-- NOTE: ~/.config/nvim/lua/plugin-config/lualine.lua
 			config = function() require('plugin-config.lualine') end
 		}
-		use("arkav/lualine-lsp-progress")
+		use("arkav/lualine-lsp-progress") -- LSP progress for lualine
 		---------------- Highlight (treesitter) ----------------
 		use {
 			"nvim-treesitter/nvim-treesitter", run = ":TSUpdate",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
 			config = function() require('plugin-config.nvim-treesitter') end
-		}
-		use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
+		} -- Treesitter
+		use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" }) -- Rainbow parentheses
 		use {
 		  "folke/todo-comments.nvim",
 		  requires = "nvim-lua/plenary.nvim",
 		  config = function() require('plugin-config.todo-comments') end
-		}
+		} -- Highlight TODO/FIXME/BUG/NOTE/...
 
+		use {
+			"RRethy/nvim-treesitter-endwise",
+			config = function() require('plugin-config.nvim-treesitter-endwise') end
+		}
 		------------------------- LSP -------------------------
 		-- Manage LSP / DAP / Formatter / Linter. Don't change the order.
 		-- NOTE: ~/.config/nvim/lua/lsp/setup.lua
@@ -72,6 +76,8 @@ packer.startup({
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig", -- LSP Config
 		}
+		-- signature helper ( 函数参数提示 )
+		use { "ray-x/lsp_signature.nvim", }-- better than nvim-lsp-signature-help
 		-- Completion Engine
 		-- NOTE: ~/.config/nvim/lua/cmp/setup.lua
 		use("hrsh7th/nvim-cmp")
@@ -84,7 +90,7 @@ packer.startup({
     use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
     use("hrsh7th/cmp-path") -- { name = 'path' }
     use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
-    use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
+    --use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
 		-- Common Language Snippets
 		use("rafamadriz/friendly-snippets")
 		-- UI 
@@ -100,9 +106,14 @@ packer.startup({
       config = function() require('plugin-config.aerial') end
     }
 		-- Code Formatter
-		use("mhartington/formatter.nvim")
-    use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
+		--use("mhartington/formatter.nvim")
+    use({
+			"jose-elias-alvarez/null-ls.nvim",
+			requires = "nvim-lua/plenary.nvim",
+			-- NOTE: ~/.config/nvim/lua/lsp/null-ls.lua
+		})
 		-- Misc
+		use "lilydjwg/fcitx.vim"
 		use{
 			"uga-rosa/ccc.nvim",
 			config = function() require('plugin-config.ccc') end,
@@ -139,12 +150,27 @@ packer.startup({
 		  }
 		}
 
-		-- 变量名高亮 https://github.com/RRethy/vim-illuminate
+		-- Picture review in vim
+		use {
+			'edluffy/hologram.nvim',
+			config = function()
+				require('hologram').setup{
+				auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+				}
+			end
+		}
+
+		-- variables name highlight (变量名高亮) https://github.com/RRethy/vim-illuminate
 		use { 'RRethy/vim-illuminate' }
 		-- Scrollbar
 		--use {"petertriho/nvim-scrollbar", config=function() require("scrollbar").setup() end}
 		use("dstein64/nvim-scrollview")
 
+		-- Auto pairs (自动补全括号)
+		use {
+			"windwp/nvim-autopairs",
+			config = function() require('plugin-config.nvim-autopairs') end
+		}
 		-- Automatically set up your configuration after cloning packer.nvim
   	-- Put this at the end after all plugins
   	if packer_bootstrap then
