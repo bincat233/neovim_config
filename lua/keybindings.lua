@@ -1,11 +1,17 @@
--- Notice that there are some basic keybindings set in the 
+-- Notice that there are some basic keybindings set in the
 -- ~/.config/nvim/basic.vim
 -- bufferline
 -- Terminal相关
-MY_SPLIT = ''
-vim.keymap.set('n', '<A-v>', function() MY_SPLIT='' end)
-vim.keymap.set('n', '<A-s-v>', function() MY_SPLIT='v' end)
-vim.keymap.set("n", "<A-Enter>", function() vim.cmd(MY_SPLIT..'sp | terminal') end)
+MY_SPLIT = ""
+vim.keymap.set("n", "<A-v>", function()
+	MY_SPLIT = ""
+end)
+vim.keymap.set("n", "<A-s-v>", function()
+	MY_SPLIT = "v"
+end)
+vim.keymap.set("n", "<A-Enter>", function()
+	vim.cmd(MY_SPLIT .. "sp | terminal")
+end)
 
 local uConfig = require("uConfig")
 local keys = uConfig.keys
@@ -72,11 +78,11 @@ function M.bufferline_keys_setup()
 	keymap("n", "<C-w>", ":Bdelete!<CR>")
 	-- 关闭左/右侧标签页
 	keymap("n", "<leader>bh", ":BufferLineCloseLeft<CR>")
-	keymap("n",  "<leader>bl", ":BufferLineCloseRight<CR>")
+	keymap("n", "<leader>bl", ":BufferLineCloseRight<CR>")
 	-- 关闭其他标签页
-	keymap("n",  "<leader>bo", ":BufferLineCloseRight<CR>:BufferLineCloseLeft<CR>")
+	keymap("n", "<leader>bo", ":BufferLineCloseRight<CR>:BufferLineCloseLeft<CR>")
 	-- 关闭选中标签页
-	keymap("n",  "<leader>bp", ":BufferLinePickClose<CR>")
+	keymap("n", "<leader>bp", ":BufferLinePickClose<CR>")
 end
 
 -- Global key mappings for nvim-tree
@@ -88,8 +94,8 @@ M.nvim_tree_keys_setup = function()
 end
 
 -- Keymaps in the nvim-tree itself, See `:h nvim-tree-default-mappings`
-M.nvim_tree_keys={
-	{ key = {"g?"}, action = "toggle_help"},
+M.nvim_tree_keys = {
+	{ key = { "g?" }, action = "toggle_help" },
 }
 
 -- For Treesitter module: Incremental selection
@@ -104,22 +110,22 @@ M.ts_selection_keys = {
 
 M.ts_keys_setup = function()
 	-- Treesitter 折叠
-	--keymap("n", keys.fold.open, ":foldopen<CR>")
-	--keymap("n", keys.fold.close, ":foldclose<CR>")
+	keymap("n", "zo", ":foldopen<CR>")
+	keymap("n", "zc", ":foldclose<CR>")
 	-- Treesitter incremental selection
-	vim.keymap.set("n", "<A-LeftMouse>", "<Plug>gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
-	vim.keymap.set("n", "<A-RightMouse>", "<Plug>gnn", {remap = true, silent = true}) -- Alt-LeftMouse to incremental select
-	vim.keymap.set("v", "<A-LeftMouse>", "<Plug>grn", {remap = true, silent = true})
-	vim.keymap.set("v", "<Tab>", "<Plug>grn", {remap = true, silent = true}) -- Tab to expand selection
-	vim.keymap.set("v", "<A-RightMouse>", "<Plug>grm", {remap = true, silent = true}) -- Alt-RightMouse to reduce selection
-	vim.keymap.set("v", "<S-Tab>", "<Plug>grm", {remap = true, silent = true}) -- Shift-Tab to reduce selection
+	vim.keymap.set("n", "<A-LeftMouse>", "<Plug>gnn", { remap = true, silent = true }) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("n", "<A-RightMouse>", "<Plug>gnn", { remap = true, silent = true }) -- Alt-LeftMouse to incremental select
+	vim.keymap.set("v", "<A-LeftMouse>", "<Plug>grn", { remap = true, silent = true })
+	vim.keymap.set("v", "<Tab>", "<Plug>grn", { remap = true, silent = true }) -- Tab to expand selection
+	vim.keymap.set("v", "<A-RightMouse>", "<Plug>grm", { remap = true, silent = true }) -- Alt-RightMouse to reduce selection
+	vim.keymap.set("v", "<S-Tab>", "<Plug>grm", { remap = true, silent = true }) -- Shift-Tab to reduce selection
 end
 
 -- For LuaSnip module: Snippet Navigation
 -- https://github.com/L3MON4D3/LuaSnip#keymaps
 M.luasnip_keys_setup = function()
 	local ls = require("luasnip")
-	vim.keymap.set({ "i", "s" }, "<C-l>" , function()
+	vim.keymap.set({ "i", "s" }, "<C-l>", function()
 		if ls.expand_or_jumpable() then
 			ls.expand_or_jump()
 		end
@@ -160,7 +166,7 @@ if cmp then
 		-- Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
-			select = false,
+			select = true, -- Perselect first item
 		}),
 		-- 如果窗口内容太多，可以滚动
 		["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
@@ -178,18 +184,18 @@ if cmp then
 end
 
 -- For Copilot
-M.copilot_keys_config = function ()
+M.copilot_keys_config = function()
 	-- Map <M-Bslash> to toggle copilot
-	vim.cmd [[
+	vim.cmd([[
 	inoremap <expr> <M-Bslash> copilot#GetDisplayedSuggestion().text == "" ? copilot#Suggest() : copilot#Dismiss()
-	]]
+	]])
 end
 
 -- For nvim-lspconfig module: LSP
 M.lsp_globe_keys_setup = function()
 	-- Diagnostic keys, copy from https://github.com/neovim/nvim-lspconfig#suggested-configuration
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-	local opts = { noremap=true, silent=true }
+	local opts = { noremap = true, silent = true }
 
 	-- Default keymap options
 	--vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
@@ -199,10 +205,10 @@ M.lsp_globe_keys_setup = function()
 
 	-- Lspsaga keys
 	local bmap = vim.api.nvim_buf_set_keymap
-	bmap(0, "n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
-	bmap(0, "n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
-	bmap(0, "n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
-	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+	bmap(0, "n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<cr>", { silent = true, noremap = true })
+	bmap(0, "n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { silent = true, noremap = true })
+	bmap(0, "n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", { silent = true, noremap = true })
+	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 end
 
 M.lsp_on_attach_keys_setup = function(bufnr)
@@ -212,52 +218,57 @@ M.lsp_on_attach_keys_setup = function(bufnr)
 	-- NOTE: Global keys: For all conditions
 
 	-- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	-- Mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+	vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+	vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+	vim.keymap.set("n", "<leader>wl", function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end, bufopts)
+	vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+	vim.keymap.set("n", "<leader>f", function()
+		vim.lsp.buf.format({ async = true })
+	end, bufopts)
 
 	-- NOTE: Only for lspconfig default version
-  --vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-  --vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  --vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+	--vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+	--vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+	--vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 
 	-- NOTE: Only for lspsaga, See: https://github.com/kkharji/lspsaga.nvim#example-keymapings
 	-- My keymap follows the default keymap of lspconfig, and diagnostic keys setted in lsp_globe_keys_setup()
 	local bmap = vim.api.nvim_buf_set_keymap
-	bmap(0, "n", "<leader>rn", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
-	bmap(0, "n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
-	bmap(0, "x", "<leader>ca", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
-	bmap(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
+	bmap(0, "n", "<leader>rn", "<cmd>Lspsaga rename<cr>", { silent = true, noremap = true })
+	bmap(0, "n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { silent = true, noremap = true })
+	bmap(0, "x", "<leader>ca", ":<c-u>Lspsaga range_code_action<cr>", { silent = true, noremap = true })
+	bmap(0, "n", "K", "<cmd>Lspsaga hover_doc<cr>", { silent = true, noremap = true })
 	bmap(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
 	bmap(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+	keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>") -- Toglle Outline
+
+
 
 	-- NOTE: Only for telescope
-  -- go xx
-  --mapbuf("n", lsp.definition, function()
-  --  require("telescope.builtin").lsp_definitions({
-  --    initial_mode = "normal",
-  --    -- ignore_filename = false,
-  --  })
-  --end)
+	-- go xx
+	--mapbuf("n", lsp.definition, function()
+	--  require("telescope.builtin").lsp_definitions({
+	--    initial_mode = "normal",
+	--    -- ignore_filename = false,
+	--  })
+	--end)
 
-  --mapbuf(
-  --  "n",
-  --  lsp.references,
-  --  "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_ivy())<CR>"
-  --)
+	--mapbuf(
+	--  "n",
+	--  lsp.references,
+	--  "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_ivy())<CR>"
+	--)
 end
 
 -- NOTE: ~/.config/nvim/lua/plugin-config/todo-comments.lua
@@ -275,7 +286,6 @@ M.todo_comments_keys_setup = function()
 	--vim.keymap.set("n", "]t", function()
 	--	require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
 	--end, { desc = "Next error/warning todo comment" })
-
 end
 
 -- NOTE: ~/.config/nvim/lua/plugin-config/gitsigns.lua
@@ -289,44 +299,73 @@ M.gitsigns_keys_setup = function(bufnr)
 	end
 
 	-- Navigation
-	map('n', ']c', function()
-		if vim.wo.diff then return ']c' end
-		vim.schedule(function() gs.next_hunk() end)
-		return '<Ignore>'
-	end, {expr=true})
+	map("n", "]c", function()
+		if vim.wo.diff then
+			return "]c"
+		end
+		vim.schedule(function()
+			gs.next_hunk()
+		end)
+		return "<Ignore>"
+	end, { expr = true })
 
-	map('n', '[c', function()
-		if vim.wo.diff then return '[c' end
-		vim.schedule(function() gs.prev_hunk() end)
-		return '<Ignore>'
-	end, {expr=true})
+	map("n", "[c", function()
+		if vim.wo.diff then
+			return "[c"
+		end
+		vim.schedule(function()
+			gs.prev_hunk()
+		end)
+		return "<Ignore>"
+	end, { expr = true })
 
 	-- Actions
-	map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
-	map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
-	map('n', '<leader>hS', gs.stage_buffer)
-	map('n', '<leader>hu', gs.undo_stage_hunk)
-	map('n', '<leader>hR', gs.reset_buffer)
-	map('n', '<leader>hp', gs.preview_hunk)
-	map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-	map('n', '<leader>tb', gs.toggle_current_line_blame)
-	map('n', '<leader>hd', gs.diffthis)
-	map('n', '<leader>hD', function() gs.diffthis('~') end)
-	map('n', '<leader>td', gs.toggle_deleted)
+	map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
+	map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
+	map("n", "<leader>hS", gs.stage_buffer)
+	map("n", "<leader>hu", gs.undo_stage_hunk)
+	map("n", "<leader>hR", gs.reset_buffer)
+	map("n", "<leader>hp", gs.preview_hunk)
+	map("n", "<leader>hb", function()
+		gs.blame_line({ full = true })
+	end)
+	map("n", "<leader>tb", gs.toggle_current_line_blame)
+	map("n", "<leader>hd", gs.diffthis)
+	map("n", "<leader>hD", function()
+		gs.diffthis("~")
+	end)
+	map("n", "<leader>td", gs.toggle_deleted)
 
 	-- Text object
-	map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+	map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 end
 
 M.aerial_keys_setup = function(bufnr)
-  -- Jump forwards/backwards with '{' and '}'
-	vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
-	vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+	-- Jump forwards/backwards with '{' and '}'
+	vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+	vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
 end
 
 M.aerial_global_keys_setup = function()
 	-- Open/close the Aerial window with '<C-t>'
-	vim.keymap.set('n', '<A-j>', '<cmd>AerialToggle!<CR>')
+	vim.keymap.set("n", "<A-j>", "<cmd>AerialToggle!<CR>")
+end
+
+M.jdtls_global_keys_setup = function()
+	-- https://github.com/mfussenegger/nvim-jdtls#usage
+	vim.cmd([[
+	nnoremap <A-o> <Cmd>lua require'jdtls'.organize_imports()<CR>
+	nnoremap crv <Cmd>lua require('jdtls').extract_variable()<CR>
+	vnoremap crv <Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>
+	nnoremap crc <Cmd>lua require('jdtls').extract_constant()<CR>
+	vnoremap crc <Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>
+	vnoremap crm <Esc><Cmd>lua require('jdtls').extract_method(true)<CR>
+	
+	"" If using nvim-dap
+	"" This requires java-debug and vscode-java-test bundles, see install steps in this README further below.
+	"nnoremap <leader>df <Cmd>lua require'jdtls'.test_class()<CR>
+	"nnoremap <leader>dn <Cmd>lua require'jdtls'.test_nearest_method()<CR>
+	]])
 end
 
 return M

@@ -96,7 +96,7 @@ set nrformats-=octal " Don't use octal numbers when incrementing/decrementing wi
 set autoread " Automatically reload files when changed outside of Vim
 set whichwrap+=<,>,[,] " Move to next line with <Left>/<Right> at end of line
 "set cmdheight=2 " More space for displaying messages
-set completeopt=menu,menuone,noselect,noinsert " Better completion
+set completeopt=menu,menuone,noinsert " Better completion
 set shortmess+=c " Don't pass messages to |ins-completion-menu|.
 set showtabline=2 " Always show tabs
 set signcolumn=yes " Always show signcolumn
@@ -154,9 +154,10 @@ vnoremap <F1> <Nop>
 inoremap jk <esc>
 
 " Copy/Paste to system clipboard
-vmap <leader>y "+y
-vmap <leader>d "+d
 nmap <leader>y "+y
+vmap <leader>y "+y
+nmap <leader>d "+d
+vmap <leader>d "+d
 nmap <leader>p "+p
 nmap <leader>P "+P
 vmap <leader>p "+p

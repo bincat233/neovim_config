@@ -1,11 +1,13 @@
 -- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 -- https://github.com/hrsh7th/nvim-cmp
 -- https://github.com/onsails/lspkind-nvim
-local cmp=safe_require("cmp")
-local luasnip=safe_require("luasnip")
-local config=safe_require("uConfig")
+local cmp = safe_require("cmp")
+local luasnip = safe_require("luasnip")
+local config = safe_require("uConfig")
 local keys = require("keybindings")
-if not cmp or not luasnip or not config or not keys then return end
+if not cmp or not luasnip or not config or not keys then
+	return
+end
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -70,18 +72,18 @@ cmp.setup.cmdline(":", {
 	sources = cmp.config.sources({ {
 		name = "path",
 	} }, { {
-			name = "cmdline",
-		} }),
+		name = "cmdline",
+	} }),
 })
 
 cmp.setup.filetype({ "markdown", "help" }, {
 	sources = { {
 		name = "luasnip",
 	}, {
-			name = "buffer",
-		}, {
-			name = "path",
-		} },
+		name = "buffer",
+	}, {
+		name = "path",
+	} },
 })
 
 require("cmp.luasnip")

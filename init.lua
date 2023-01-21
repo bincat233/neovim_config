@@ -1,8 +1,9 @@
 -- Use `gf` to open files under the cursor
 
 -- Get the path to the config dir
---local config_dir = vim.fn.stdpath('config')
-_G.CONFIG_DIR = vim.api.nvim_list_runtime_paths()[1]
+--_G.CONFIG_DIR = vim.api.nvim_list_runtime_paths()[1]
+_G.CONFIG_DIR= vim.fn.stdpath('config')
+_G.DATA_DIR = vim.fn.stdpath('data')
 -- Function to source vimscript files
 function _G.source_viml(file)
 	vim.cmd("source " .. CONFIG_DIR .. "/" .. file)

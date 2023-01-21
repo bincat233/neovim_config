@@ -76,6 +76,8 @@ packer.startup({
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig", -- LSP Config
 		}
+		-- 独立的 java LSP 客户端
+		use 'mfussenegger/nvim-jdtls'
 		-- signature helper ( 函数参数提示 )
 		use { "ray-x/lsp_signature.nvim", }-- better than nvim-lsp-signature-help
 		-- Completion Engine
@@ -112,12 +114,23 @@ packer.startup({
 			requires = "nvim-lua/plenary.nvim",
 			-- NOTE: ~/.config/nvim/lua/lsp/null-ls.lua
 		})
-		-- Misc
+
+		----------------------------------- Misc -----------------------------------
 		use "lilydjwg/fcitx.vim"
+		use {
+			"ianding1/leetcode.vim",
+			-- pacman -S python-keyring python-browser-cookie3 python-pynvim
+			config = function()
+				vim.g.leetcode_browser = "firefox"
+				vim.g.leetcode_solution_filetype = "java"
+				vim.g.leetcode_problemset = 'all'
+			end
+		}
 		use{
 			"uga-rosa/ccc.nvim",
 			config = function() require('plugin-config.ccc') end,
 		} -- Colorizer / Color Picker
+		use { 'nvim-telescope/telescope.nvim', requires = { "nvim-lua/plenary.nvim" } } -- Fuzzy Finder 模糊搜索
 		use { -- Indent (缩进线)
 			"lukas-reineke/indent-blankline.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/indent-blankline.lua
@@ -150,15 +163,15 @@ packer.startup({
 		  }
 		}
 
-		-- Picture review in vim
-		use {
-			'edluffy/hologram.nvim',
-			config = function()
-				require('hologram').setup{
-				auto_display = true -- WIP automatic markdown image display, may be prone to breaking
-				}
-			end
-		}
+		---- Picture review in vim
+		--use {
+		--	'edluffy/hologram.nvim',
+		--	config = function()
+		--		require('hologram').setup{
+		--		auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+		--		}
+		--	end
+		--}
 
 		-- variables name highlight (变量名高亮) https://github.com/RRethy/vim-illuminate
 		use { 'RRethy/vim-illuminate' }
