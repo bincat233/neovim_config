@@ -27,22 +27,23 @@ else -- If under GUI
 		"gruvbox",
 		"two-firewatch"
 	) -- Set colorscheme to iceberg
-	vim.o.background = "light"
+	--vim.o.background = "light"
+	vim.o.background = "dark"
 end
 
 vim.cmd [[
-" 变量名高亮
-" highlight the definition of a variable
-hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#AFBBD6 
-hi def IlluminatedWordWrite guibg=#AFBBD6
-
-" highlight the usage of a variable
-hi LspReferenceRead cterm=bold ctermbg=LightYellow guibg=#CCD2E1
-hi def IlluminatedWordRead guibg=#CCD2E1
-
-" highlight the text of a variable
-hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#DFE1E8 
-hi def IlluminatedWordText guibg=#CCD2E1
+"" 变量名高亮 (Just for light theme)
+"" highlight the definition of a variable
+"hi LspReferenceWrite cterm=bold ctermbg=LightYellow guibg=#AFBBD6 
+"hi def IlluminatedWordWrite guibg=#AFBBD6
+"
+"" highlight the usage of a variable
+"hi LspReferenceRead cterm=bold ctermbg=LightYellow guibg=#CCD2E1
+"hi def IlluminatedWordRead guibg=#CCD2E1
+"
+"" highlight the text of a variable
+"hi LspReferenceText cterm=bold ctermbg=LightYellow guibg=#DFE1E8 
+"hi def IlluminatedWordText guibg=#CCD2E1
 
 " 自动补全弃用方法添加删除线
 highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#8389a3

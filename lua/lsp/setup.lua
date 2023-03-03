@@ -33,7 +33,7 @@ mason_config.setup({
 		"clangd",
 		"cmake",
 		"rust_analyzer",
-		"sumneko_lua",
+		"lua_ls",
 	},
 })
 
@@ -70,6 +70,7 @@ require("lsp-setup").setup({
 		-- Support custom the on_attach function for global
 		-- Formatting on save as default
 		--require('lsp-setup.utils').format_on_save(client)
+		-- Disable formatting by default because we have null-ls
 		require("lsp-setup.utils").disable_formatting(client)
 		-- For Signature Help (函数参数提示)
 		require("lsp.lsp_signature").setup(bufnr)
@@ -112,7 +113,7 @@ require("lsp-setup").setup({
 				},
 			},
 		},
-		sumneko_lua = {
+		lua_ls = {
 			settings = {
 				Lua = {
 					runtime = {
@@ -149,6 +150,13 @@ require("lsp-setup").setup({
 				less = { validate = true, lint = { unknownAtRules = "ignore" } },
 				scss = { validate = true, lint = { unknownAtRules = "ignore" } },
 			},
+		},
+		bashls = {
+			cmd = { "bash-language-server", "start" },
+			filetypes = { "sh", "zsh" },
+			root_dir = function(fname)
+				return lspconfig.util.root_pattern(".git")(fname) or lspconfig.util.path.dirname(fname)
+			end,
 		},
 	},
 })

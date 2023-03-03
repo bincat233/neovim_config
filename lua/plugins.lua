@@ -8,160 +8,197 @@
 
 -- Automatically install and set up packer.nvim on any machine you clone your configuration to
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 local packer_bootstrap = ensure_packer()
 
---require('plugin-config.') -- 
+--require('plugin-config.') --
 local packer = require("packer")
 packer.startup({
 	function(use)
 		-- Packer 可以管理自己本身
-		use 'wbthomason/packer.nvim'
+		use("wbthomason/packer.nvim")
 		-- ------------------------------- Plugins -------------------------------
 		-- Colorschemes and themes
-		use 'cocopon/iceberg.vim' -- My favorite colorscheme with best light theme
-		use 'shaunsingh/seoul256.nvim'
-		use 'folke/tokyonight.nvim' -- Has good support for treesitter
-		use 'altercation/vim-colors-solarized' -- Has good support under TTYs
-		use 'catppuccin/nvim'
-		use 'projekt0n/github-nvim-theme'
-		use { -- File explorer
-			"nvim-tree/nvim-tree.lua", requires = "nvim-tree/nvim-web-devicons", tag = 'nightly',
+		use("cocopon/iceberg.vim") -- My favorite colorscheme with best light theme
+		use("shaunsingh/seoul256.nvim")
+		use("folke/tokyonight.nvim") -- Has good support for treesitter
+		use("altercation/vim-colors-solarized") -- Has good support under TTYs
+		use("catppuccin/nvim")
+		use("projekt0n/github-nvim-theme")
+		use({ -- File explorer
+			"nvim-tree/nvim-tree.lua",
+			requires = "nvim-tree/nvim-web-devicons",
+			tag = "nightly",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-tree.lua
-			config = function() require('plugin-config.nvim-tree') end,
-		}
-		use { -- Bufferline
+			config = function()
+				require("plugin-config.nvim-tree")
+			end,
+		})
+		use({ -- Bufferline
 			"akinsho/bufferline.nvim",
 			requires = { "nvim-tree/nvim-web-devicons", "moll/vim-bbye" },
 			-- NOTE: ~/.config/nvim/lua/plugin-config/bufferline.lua
-			config = function() require('plugin-config.bufferline') end,
-		}
-		use { -- Statusline
-			"nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons" },
+			config = function()
+				require("plugin-config.bufferline")
+			end,
+		})
+		use({ -- Statusline
+			"nvim-lualine/lualine.nvim",
+			requires = { "nvim-tree/nvim-web-devicons" },
 			-- NOTE: ~/.config/nvim/lua/plugin-config/lualine.lua
-			config = function() require('plugin-config.lualine') end
-		}
+			config = function()
+				require("plugin-config.lualine")
+			end,
+		})
 		use("arkav/lualine-lsp-progress") -- LSP progress for lualine
 		---------------- Highlight (treesitter) ----------------
-		use {
-			"nvim-treesitter/nvim-treesitter", run = ":TSUpdate",
+		use({
+			"nvim-treesitter/nvim-treesitter",
+			run = ":TSUpdate",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-treesitter.lua
-			config = function() require('plugin-config.nvim-treesitter') end
-		} -- Treesitter
+			config = function()
+				require("plugin-config.nvim-treesitter")
+			end,
+		}) -- Treesitter
 		use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" }) -- Rainbow parentheses
-		use {
-		  "folke/todo-comments.nvim",
-		  requires = "nvim-lua/plenary.nvim",
-		  config = function() require('plugin-config.todo-comments') end
-		} -- Highlight TODO/FIXME/BUG/NOTE/...
+		use({
+			"folke/todo-comments.nvim",
+			requires = "nvim-lua/plenary.nvim",
+			config = function()
+				require("plugin-config.todo-comments")
+			end,
+		}) -- Highlight TODO/FIXME/BUG/NOTE/...
 
-		use {
+		use({
 			"RRethy/nvim-treesitter-endwise",
-			config = function() require('plugin-config.nvim-treesitter-endwise') end
-		}
+			config = function()
+				require("plugin-config.nvim-treesitter-endwise")
+			end,
+		})
 		------------------------- LSP -------------------------
 		-- Manage LSP / DAP / Formatter / Linter. Don't change the order.
 		-- NOTE: ~/.config/nvim/lua/lsp/setup.lua
-		use {
+		use({
 			"junnplus/lsp-setup.nvim",
 			"williamboman/mason.nvim", -- LSP Installer
 			"williamboman/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig", -- LSP Config
-		}
+		})
 		-- 独立的 java LSP 客户端
-		use 'mfussenegger/nvim-jdtls'
+		use("mfussenegger/nvim-jdtls")
 		-- signature helper ( 函数参数提示 )
-		use { "ray-x/lsp_signature.nvim", }-- better than nvim-lsp-signature-help
+		use({ "ray-x/lsp_signature.nvim" }) -- better than nvim-lsp-signature-help
 		-- Completion Engine
 		-- NOTE: ~/.config/nvim/lua/cmp/setup.lua
 		use("hrsh7th/nvim-cmp")
 		-- Snippet Engine
 		use("L3MON4D3/LuaSnip")
 		use("saadparwaiz1/cmp_luasnip")
-    -- Completion Source
-    use("hrsh7th/cmp-vsnip")
-    use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
-    use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
-    use("hrsh7th/cmp-path") -- { name = 'path' }
-    use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
-    --use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
+		-- Completion Source
+		use("hrsh7th/cmp-vsnip")
+		use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
+		use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
+		use("hrsh7th/cmp-path") -- { name = 'path' }
+		use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
+		--use("hrsh7th/cmp-nvim-lsp-signature-help") -- { name = 'nvim_lsp_signature_help' }
 		-- Common Language Snippets
 		use("rafamadriz/friendly-snippets")
-		-- UI 
+		-- UI
 		use("onsails/lspkind-nvim")
-    use({
+		use({
 			"glepnir/lspsaga.nvim",
 			-- NOTE: ~/.config/nvim/lua/lsp/lspsaga.lua
-			config = function() require('lsp.lspsaga') end,
+			config = function()
+				require("lsp.lspsaga")
+			end,
 		})
-    use {
-      'stevearc/aerial.nvim',
+		use({
+			"stevearc/aerial.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/aerial.lua
-      config = function() require('plugin-config.aerial') end
-    }
+			config = function()
+				require("plugin-config.aerial")
+			end,
+		})
 		-- Code Formatter
 		--use("mhartington/formatter.nvim")
-    use({
+		use({
 			"jose-elias-alvarez/null-ls.nvim",
 			requires = "nvim-lua/plenary.nvim",
 			-- NOTE: ~/.config/nvim/lua/lsp/null-ls.lua
 		})
 
 		----------------------------------- Misc -----------------------------------
-		use "lilydjwg/fcitx.vim"
-		use {
+		use("lilydjwg/fcitx.vim")
+		use({
 			"ianding1/leetcode.vim",
 			-- pacman -S python-keyring python-browser-cookie3 python-pynvim
 			config = function()
 				vim.g.leetcode_browser = "firefox"
 				vim.g.leetcode_solution_filetype = "java"
-				vim.g.leetcode_problemset = 'all'
-			end
-		}
-		use{
+				vim.g.leetcode_problemset = "all"
+			end,
+		})
+		use({
 			"uga-rosa/ccc.nvim",
-			config = function() require('plugin-config.ccc') end,
-		} -- Colorizer / Color Picker
-		use { 'nvim-telescope/telescope.nvim', requires = { "nvim-lua/plenary.nvim" } } -- Fuzzy Finder 模糊搜索
-		use { -- Indent (缩进线)
+			config = function()
+				require("plugin-config.ccc")
+			end,
+		}) -- Colorizer / Color Picker
+		use({
+			"nvim-telescope/telescope.nvim",
+			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("plugin-config.telescope")
+			end,
+		}) -- Fuzzy Finder 模糊搜索
+		use({ -- Indent (缩进线)
 			"lukas-reineke/indent-blankline.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/indent-blankline.lua
-			config = function() require('plugin-config.indent-blankline') end
-		}
-		use { 'github/copilot.vim',
 			config = function()
-				local keys = require('keybindings')
+				require("plugin-config.indent-blankline")
+			end,
+		})
+		use({
+			"github/copilot.vim",
+			config = function()
+				local keys = require("keybindings")
 				keys.copilot_keys_config()
-			end
-		}
-		use 'tpope/vim-sensible'
-		use { -- A better user experience for interacting with and manipulating Vim marks.
-			'chentoast/marks.nvim',
+			end,
+		})
+		use("tpope/vim-sensible")
+		use({ -- A better user experience for interacting with and manipulating Vim marks.
+			"chentoast/marks.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/marks.lua
-			config = function() require('plugin-config.marks') end
-		}
-		use { -- If not under neovide, use beacon.nvim to highlight cursor
-			'DanilaMihailov/beacon.nvim',
+			config = function()
+				require("plugin-config.marks")
+			end,
+		})
+		use({ -- If not under neovide, use beacon.nvim to highlight cursor
+			"DanilaMihailov/beacon.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/beacon.lua
-			config = function() require('plugin-config.beacon') end
-		}
+			config = function()
+				require("plugin-config.beacon")
+			end,
+		})
 
-		use {
-			'lewis6991/gitsigns.nvim',
+		use({
+			"lewis6991/gitsigns.nvim",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/gitsigns.lua
-			config = function() require('plugin-config.gitsigns') end,
-		  requires = {
-		    'nvim-lua/plenary.nvim'
-		  }
-		}
+			config = function()
+				require("plugin-config.gitsigns")
+			end,
+			requires = {
+				"nvim-lua/plenary.nvim",
+			},
+		})
 
 		---- Picture review in vim
 		--use {
@@ -174,21 +211,23 @@ packer.startup({
 		--}
 
 		-- variables name highlight (变量名高亮) https://github.com/RRethy/vim-illuminate
-		use { 'RRethy/vim-illuminate' }
+		use({ "RRethy/vim-illuminate" })
 		-- Scrollbar
 		--use {"petertriho/nvim-scrollbar", config=function() require("scrollbar").setup() end}
 		use("dstein64/nvim-scrollview")
 
 		-- Auto pairs (自动补全括号)
-		use {
+		use({
 			"windwp/nvim-autopairs",
-			config = function() require('plugin-config.nvim-autopairs') end
-		}
+			config = function()
+				require("plugin-config.nvim-autopairs")
+			end,
+		})
 		-- Automatically set up your configuration after cloning packer.nvim
-  	-- Put this at the end after all plugins
-  	if packer_bootstrap then
-  	  require('packer').sync()
-  	end
+		-- Put this at the end after all plugins
+		if packer_bootstrap then
+			require("packer").sync()
+		end
 	end,
 	config = {
 		max_jobs = 16, -- 16个并发任务
@@ -204,7 +243,6 @@ packer.startup({
 --if vim.g.neovide==nil then -- If under neovide, don't load beacon.nvim
 --	vim.cmd [[packadd beacon.nvim]]
 --end
-
 
 -- 每次保存 plugins.lua 自动安装插件
 pcall(

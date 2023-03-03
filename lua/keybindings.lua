@@ -75,7 +75,7 @@ function M.bufferline_keys_setup()
 	keymap("n", "<C-h>", ":BufferLineCyclePrev<CR>")
 	keymap("n", "<C-l>", ":BufferLineCycleNext<CR>")
 	-- "moll/vim-bbye" 关闭当前 buffer
-	keymap("n", "<C-w>", ":Bdelete!<CR>")
+	--keymap("n", "<C-w>", ":Bdelete!<CR>")
 	-- 关闭左/右侧标签页
 	keymap("n", "<leader>bh", ":BufferLineCloseLeft<CR>")
 	keymap("n", "<leader>bl", ":BufferLineCloseRight<CR>")
@@ -88,6 +88,7 @@ end
 -- Global key mappings for nvim-tree
 M.nvim_tree_keys_setup = function()
 	map("n", "<A-f>", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
+	map("n", "<leader>ft", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
 	keymap("n", "<leader>ff", ":NvimTreeToggle<CR>")
 	keymap("n", "<leader>fr", ":NvimTreeRefresh<CR>")
 	keymap("n", "<leader>fn", ":NvimTreeFindFile<CR>")
@@ -154,10 +155,9 @@ local cmp = safe_require("cmp")
 if cmp then
 	M.cmp_keys = {
 		-- 出现补全
-		["<A-.>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }), -- ME: Like IDEA
 		-- 取消
-		["<A-,>"] = cmp.mapping({
+		["<C-c>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		}),
@@ -165,6 +165,10 @@ if cmp then
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true, -- Perselect first item
+		}),
+		["<C-l>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true, -- Perselect first item
 		}),
