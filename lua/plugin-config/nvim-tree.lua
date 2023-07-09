@@ -3,7 +3,7 @@ local keybindings=safe_require('keybindings')
 if not nvim_tree or not keybindings then return end
 
 nvim_tree.setup({
-	open_on_setup = true,
+	--open_on_setup = true, -- Deprecated, see: https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
 	--disable_netrw = true, -- 禁止内置netrw
 	-- git = { -- 不显示git状态
 	-- 		enable = true,

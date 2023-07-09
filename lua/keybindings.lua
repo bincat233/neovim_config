@@ -1,17 +1,24 @@
 -- Notice that there are some basic keybindings set in the
 -- ~/.config/nvim/basic.vim
+-- <C-s-c> in visual mode to copy
+-- <C-s-v> in all mode to paste
+-- <C-s-x> in visual mode to cut
+vim.keymap.set({ "n", "v", "s" }, "<C-S-v>", '"+p')
+vim.keymap.set("v", "<C-S-c>", '"+y')
+vim.keymap.set("v", "<C-S-x>", '"+d')
+
 -- bufferline
 -- Terminal相关
-MY_SPLIT = ""
-vim.keymap.set("n", "<A-v>", function()
-	MY_SPLIT = ""
-end)
-vim.keymap.set("n", "<A-s-v>", function()
-	MY_SPLIT = "v"
-end)
-vim.keymap.set("n", "<A-Enter>", function()
-	vim.cmd(MY_SPLIT .. "sp | terminal")
-end)
+--MY_SPLIT = ""
+--vim.keymap.set("n", "<A-v>", function()
+--	MY_SPLIT = ""
+--end)
+--vim.keymap.set("n", "<A-s-v>", function()
+--	MY_SPLIT = "v"
+--end)
+--vim.keymap.set("n", "<A-Enter>", function()
+--	vim.cmd(MY_SPLIT .. "sp | terminal")
+--end)
 
 local uConfig = require("uConfig")
 local keys = uConfig.keys
@@ -63,7 +70,6 @@ keymap("t", keys.terminal_to_normal, "<C-\\><C-n>")
 
 ----------------------------------------------------------------------
 local M = {}
-
 -- Set bufferline keys
 function M.bufferline_keys_setup()
 	-- My preferred mapping like i3wm
@@ -88,10 +94,10 @@ end
 -- Global key mappings for nvim-tree
 M.nvim_tree_keys_setup = function()
 	map("n", "<A-f>", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
-	map("n", "<leader>ft", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
-	keymap("n", "<leader>ff", ":NvimTreeToggle<CR>")
-	keymap("n", "<leader>fr", ":NvimTreeRefresh<CR>")
-	keymap("n", "<leader>fn", ":NvimTreeFindFile<CR>")
+	--map("n", "<leader>ft", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
+	--keymap("n", "<leader>ff", ":NvimTreeToggle<CR>")
+	--keymap("n", "<leader>fr", ":NvimTreeRefresh<CR>")
+	--keymap("n", "<leader>fn", ":NvimTreeFindFile<CR>")
 end
 
 -- Keymaps in the nvim-tree itself, See `:h nvim-tree-default-mappings`
@@ -161,10 +167,14 @@ if cmp then
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		}),
+		["<C-h>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true, -- Perselect first item
+		}),
 		-- 确认
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
-		["<CR>"] = cmp.mapping.confirm({
+		["<C-CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true, -- Perselect first item
 		}),
@@ -213,6 +223,9 @@ M.lsp_globe_keys_setup = function()
 	bmap(0, "n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { silent = true, noremap = true })
 	bmap(0, "n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", { silent = true, noremap = true })
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+	vim.keymap.set("n", "<leader>f", function()
+		vim.lsp.buf.format({ async = true })
+	end)
 end
 
 M.lsp_on_attach_keys_setup = function(bufnr)
@@ -255,9 +268,7 @@ M.lsp_on_attach_keys_setup = function(bufnr)
 	bmap(0, "n", "K", "<cmd>Lspsaga hover_doc<cr>", { silent = true, noremap = true })
 	bmap(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
 	bmap(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
-	keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>") -- Toglle Outline
-
-
+	keymap("n", "<leader>o", "<cmd>Lspsaga outline<CR>") -- Toglle Outline
 
 	-- NOTE: Only for telescope
 	-- go xx

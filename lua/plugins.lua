@@ -28,11 +28,15 @@ packer.startup({
 		-- ------------------------------- Plugins -------------------------------
 		-- Colorschemes and themes
 		use("cocopon/iceberg.vim") -- My favorite colorscheme with best light theme
-		use("shaunsingh/seoul256.nvim")
+		--use("iceberg/iceberg.nvim") -- nvim port of iceberg.vim
+		use("junegunn/seoul256.vim") -- Low contrast colorscheme
+		--use("shaunsingh/seoul256.nvim") -- nvim port of seoul256, but without light theme
 		use("folke/tokyonight.nvim") -- Has good support for treesitter
 		use("altercation/vim-colors-solarized") -- Has good support under TTYs
 		use("catppuccin/nvim")
+		use("NLKNguyen/papercolor-theme")
 		use("projekt0n/github-nvim-theme")
+    use("folke/which-key.nvim")
 		use({ -- File explorer
 			"nvim-tree/nvim-tree.lua",
 			requires = "nvim-tree/nvim-web-devicons",
@@ -136,7 +140,17 @@ packer.startup({
 		})
 
 		----------------------------------- Misc -----------------------------------
-		use("lilydjwg/fcitx.vim")
+		use("skywind3000/asyncrun.vim") -- Async Run Command
+		--use({
+		--	"terror/chatgpt.nvim",
+		--	run = "pip3 install --user -r requirements.txt",
+		--})
+		--use("lilydjwg/fcitx.vim")
+		use 'h-hg/fcitx.nvim'
+		use({
+			'epwalsh/obsidian.nvim',
+			require = 'nvim-lua/plenary.nvim',
+		})
 		use({
 			"ianding1/leetcode.vim",
 			-- pacman -S python-keyring python-browser-cookie3 python-pynvim
@@ -171,6 +185,11 @@ packer.startup({
 			config = function()
 				local keys = require("keybindings")
 				keys.copilot_keys_config()
+				vim.cmd([[
+					let g:copilot_filetypes = {
+					\ '*': v:true,
+					\ }
+				]])
 			end,
 		})
 		use("tpope/vim-sensible")
@@ -198,6 +217,17 @@ packer.startup({
 			requires = {
 				"nvim-lua/plenary.nvim",
 			},
+		})
+
+		-- Text object
+		use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
 		})
 
 		---- Picture review in vim

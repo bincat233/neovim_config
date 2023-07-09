@@ -8,7 +8,7 @@ local telescope_keys = {
 	enable = true,
 
 	find_files = "<C-p>",
-	live_grep = "<C-f>",
+	--live_grep = "<C-f>",
 
 	-- 上下移动
 	move_selection_next = "<C-j>",

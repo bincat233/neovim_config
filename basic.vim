@@ -24,12 +24,13 @@ set nowrap " Don't wrap lines
 "set wrap " Wrap long lines
 "set textwidth=79 " Wrap at 79 characters
 "set formatoptions=tcqrn1 " Auto-wrap comments
+
 " Whitespace
 set tabstop=2 " \t is 2 spaces (\t 宽度)
 set softtabstop=2 " Tab is 2 spaces (tab 按键的宽度, 以及退格键删去的宽度. 和expandtab配合使用)
 set shiftwidth=2 " Indent is 2 spaces (缩进宽度)
-"set expandtab " Use spaces instead of tabs (tab 按键插入空格, 退格键删去空格)
-set noexpandtab " Use tabs instead of spaces (tab 按键插入tab, 退格键删去tab)
+set expandtab " Use spaces instead of tabs (tab 按键插入空格, 退格键删去空格)
+"set noexpandtab " Use tabs instead of spaces (tab 按键插入tab, 退格键删去tab)
 set smarttab " Use `shiftwidth` for leading indentation, `(soft)tabstop` otherwise 
 " NOTE: Use `:retab!` to convert tabs to spaces manually
 "autocmd BufEnter *.py :setlocal ts=4 sts=4 sw=4 expandtab

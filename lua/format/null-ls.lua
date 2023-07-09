@@ -12,6 +12,9 @@ null_ls.setup({
 	debug = false,
 	sources = {
 		-- Formatting ---------------------
+		-- You can find more formatters here:
+		-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+		-- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Source-specific-Configuration
 		formatting.clang_format,
 		-- You need install shfmt
 		formatting.shfmt,
@@ -33,6 +36,7 @@ null_ls.setup({
 				"yaml",
 				"graphql",
 				"markdown",
+				"python",
 			},
 			timeout = 10000,
 			prefer_local = "node_modules/.bin",
@@ -43,7 +47,8 @@ null_ls.setup({
 		-- Python
 		-- pip install black
 		-- asdf reshim python
-		formatting.black.with({ extra_args = { "--fast" } }),
+		--formatting.black.with({ extra_args = { "--fast" } }),
+		formatting.black,
 		-----------------------------------------------------
 		-- Ruby
 		-- gem install rubocop
@@ -54,6 +59,13 @@ null_ls.setup({
 		-- toml
 		-- cargo install taplo-cli
 		formatting.taplo,
+		--formatting.markdownlint,
+		formatting.mdformat,
+    -- HTML
+    formatting.tidy,
+    formatting.djlint,
+    formatting.htmlbeautifier,
+
 		-----------------------------------------------------
 		-- Diagnostics  ---------------------
 		-- diagnostics.eslint.with({
@@ -63,6 +75,7 @@ null_ls.setup({
 		diagnostics.eslint_d.with({
 			prefer_local = "node_modules/.bin",
 		}),
+		diagnostics.tidy,
 		-- diagnostics.markdownlint,
 		-- markdownlint-cli2
 		-- diagnostics.markdownlint.with({

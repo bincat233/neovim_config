@@ -27,8 +27,8 @@ else -- If under GUI
 		"gruvbox",
 		"two-firewatch"
 	) -- Set colorscheme to iceberg
-	--vim.o.background = "light"
-	vim.o.background = "dark"
+	vim.o.background = "light"
+	--vim.o.background = "dark"
 end
 
 vim.cmd [[
