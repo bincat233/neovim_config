@@ -67,7 +67,7 @@ set showmatch " Show matching brackets
 
 " Visualize tabs and newlines
 "set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-set listchars=tab:▸\ ,space:·,eol:¬,nbsp:␣
+"set listchars=tab:▸\ ,space:·,eol:¬,nbsp:␣
 "set listchars=eol:¬,space:·,lead:\ ,trail:·,nbsp:◇,tab:→-,extends:▸,precedes:◂,multispace:···⬝,leadmultispace:\│\ \ \ ,	" Vim 9 support
 set list " Show invisible characters
 

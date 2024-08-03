@@ -1,13 +1,21 @@
--- Set colorscheme with fallbacks
+-- Function to set colorscheme with fallbacks
 local function set_cs(...)
+  local cs = nil
 	for _, cs in ipairs{...}  do
 		local status_ok, _ = pcall(vim.cmd, "colorscheme " .. cs)
 		if not status_ok then
-		  vim.notify('Colorscheme "' .. cs .. '" not found！')
+		  --vim.notify('Colorscheme "' .. cs .. '" not found！')
+      fallback=true
 		else
-			return
+      break
 		end
 	end
+  if cs == nil then
+    cs = "default"
+  end
+  if fallback then
+    vim.notify('Preferred colorscheme not found, fallback to ' .. cs)
+  end
 end
 
 -- Compatability with Linux TTYS
@@ -27,8 +35,15 @@ else -- If under GUI
 		"gruvbox",
 		"two-firewatch"
 	) -- Set colorscheme to iceberg
-	vim.o.background = "light"
-	--vim.o.background = "dark"
+  -- if gtk colorscheme is set to *dark or has environment variable UI_DARK_MODE set to true
+  if vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):find("dark") or
+    vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):find("dark") or
+    vim.fn.system("gsettings get org.gnome.desktop.interface gtk-color-scheme"):find("dark") or
+    os.getenv("UI_DARK_MODE") == "true" then
+    vim.o.background = "dark"
+  else
+    vim.o.background = "light"
+  end
 end
 
 vim.cmd [[

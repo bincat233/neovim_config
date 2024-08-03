@@ -1,15 +1,29 @@
 local treesitter = safe_require("nvim-treesitter.configs")
 local keys = require("keybindings")
-if not treesitter or not keys then return end
+--if not treesitter or not keys then return end
 
-treesitter.setup({
+require'nvim-treesitter.configs'.setup {
 	-- 安装 language parser
 	-- :TSInstallInfo 命令查看支持的语言
-	ensure_installed = { "comment", "c", "cpp", "rust", "json", "html", "css", "vim", "lua", "javascript", "typescript", "tsx" },
+	ensure_installed = { "hyprlang", "comment", "c", "cpp", "rust", "json", "html", "css", "vim", "lua", "javascript", "typescript", "tsx" },
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
 	--ensure_installed = 'all',
 	-- 启用代码高亮模块
 	highlight = {
 		enable = true,
+    disable = function(lang, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
 		additional_vim_regex_highlighting = false,
 	},
 	-- 启用增量选择模块
@@ -32,7 +46,7 @@ treesitter.setup({
 		-- colors = {}, -- table of hex strings
 		-- termcolors = {} -- table of colour name strings
 	}
-})
+}
 
 -- 开启 Folding 模块
 vim.opt.foldmethod = "expr"

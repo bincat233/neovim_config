@@ -27,5 +27,5 @@ if exists('g:neovide') " If the GUI is Neovide
 elseif exists('g:gonvim_running') " If the GUI is Gonvim
 	"Useful command: GonvimFilerOpen GonvimMiniMap
 	"GonvimWorkspaceNew GonvimWorkspaceNext GonvimWorkspacePrevious GonvimWorkspaceSwitch n
-	set listchars+=eol:\  " Remove the eol character because Gonvim's cursor not compatible with it
+	"set listchars+=eol:\  " Remove the eol character because Gonvim's cursor not compatible with it
 endif

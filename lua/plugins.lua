@@ -1,4 +1,6 @@
+-- TODO: Will switch to lazy.nvim
 -- Plugins settings
+--
 
 -- Plugins stored in ~/.local/share/nvim/site/pack/packer/start
 -- Use :PackerSync to install/update plugins
@@ -36,11 +38,10 @@ packer.startup({
 		use("catppuccin/nvim")
 		use("NLKNguyen/papercolor-theme")
 		use("projekt0n/github-nvim-theme")
-    use("folke/which-key.nvim")
+		use("folke/which-key.nvim")
 		use({ -- File explorer
 			"nvim-tree/nvim-tree.lua",
 			requires = "nvim-tree/nvim-web-devicons",
-			tag = "nightly",
 			-- NOTE: ~/.config/nvim/lua/plugin-config/nvim-tree.lua
 			config = function()
 				require("plugin-config.nvim-tree")
@@ -91,9 +92,9 @@ packer.startup({
 		-- Manage LSP / DAP / Formatter / Linter. Don't change the order.
 		-- NOTE: ~/.config/nvim/lua/lsp/setup.lua
 		use({
-			"junnplus/lsp-setup.nvim",
+			"junnplus/lsp-setup.nvim", -- Simple wrapper for nvim-lspconfig
 			"williamboman/mason.nvim", -- LSP Installer
-			"williamboman/mason-lspconfig.nvim",
+			"williamboman/mason-lspconfig.nvim", -- Bridge between lsp-setup.nvim and mason.nvim
 			"neovim/nvim-lspconfig", -- LSP Config
 		})
 		-- 独立的 java LSP 客户端
@@ -118,7 +119,7 @@ packer.startup({
 		-- UI
 		use("onsails/lspkind-nvim")
 		use({
-			"glepnir/lspsaga.nvim",
+			"nvimdev/lspsaga.nvim",
 			-- NOTE: ~/.config/nvim/lua/lsp/lspsaga.lua
 			config = function()
 				require("lsp.lspsaga")
@@ -146,10 +147,10 @@ packer.startup({
 		--	run = "pip3 install --user -r requirements.txt",
 		--})
 		--use("lilydjwg/fcitx.vim")
-		use 'h-hg/fcitx.nvim'
+		use("h-hg/fcitx.nvim")
 		use({
-			'epwalsh/obsidian.nvim',
-			require = 'nvim-lua/plenary.nvim',
+			"epwalsh/obsidian.nvim",
+			require = "nvim-lua/plenary.nvim",
 		})
 		use({
 			"ianding1/leetcode.vim",
@@ -221,13 +222,13 @@ packer.startup({
 
 		-- Text object
 		use({
-    "kylechui/nvim-surround",
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
-    end
+			"kylechui/nvim-surround",
+			tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+			config = function()
+				require("nvim-surround").setup({
+					-- Configuration here, or leave empty to use defaults
+				})
+			end,
 		})
 
 		---- Picture review in vim
@@ -253,6 +254,8 @@ packer.startup({
 				require("plugin-config.nvim-autopairs")
 			end,
 		})
+
+		use({ "waycrate/swhkd-vim" })
 		-- Automatically set up your configuration after cloning packer.nvim
 		-- Put this at the end after all plugins
 		if packer_bootstrap then

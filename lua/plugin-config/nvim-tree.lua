@@ -2,6 +2,13 @@ local nvim_tree=safe_require('nvim-tree')
 local keybindings=safe_require('keybindings')
 if not nvim_tree or not keybindings then return end
 
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
 nvim_tree.setup({
 	--open_on_setup = true, -- Deprecated, see: https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup
 	--disable_netrw = true, -- 禁止内置netrw
@@ -23,12 +30,12 @@ nvim_tree.setup({
 		--width = 20, -- 宽度
 		adaptive_size = true, -- 自适应宽度
 		side = 'left', -- Also 'right'
-		hide_root_folder = false, -- 隐藏根目录
+		--hide_root_folder = false, -- 隐藏根目录
 		-- 自定义列表中快捷键
-		mappings = {
-			custom_only = false,
-			list = keybindings.nvim_tree,
-		},
+		--mappings = {
+		--	custom_only = false,
+		--	list = keybindings.nvim_tree,
+		--},
 		number = false, -- 不显示行数
 		relativenumber = false,
 		signcolumn = 'yes', -- 显示图标
@@ -45,9 +52,9 @@ nvim_tree.setup({
 })
 
 -- 自动关闭
-vim.cmd([[
-	autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
-]])
+--vim.cmd([[
+--	autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+--]])
 
 -- Setup global keybindings
 keybindings.nvim_tree_keys_setup()

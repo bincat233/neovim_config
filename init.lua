@@ -2,8 +2,8 @@
 
 -- Get the path to the config dir
 --_G.CONFIG_DIR = vim.api.nvim_list_runtime_paths()[1]
-_G.CONFIG_DIR= vim.fn.stdpath('config')
-_G.DATA_DIR = vim.fn.stdpath('data')
+_G.CONFIG_DIR = vim.fn.stdpath("config")
+_G.DATA_DIR = vim.fn.stdpath("data")
 -- Function to source vimscript files
 function _G.source_viml(file)
 	vim.cmd("source " .. CONFIG_DIR .. "/" .. file)
@@ -21,6 +21,7 @@ function _G.put(...)
 	return ...
 end
 
+-- A function to map keys
 function _G.keymap(mode, lhs, rhs, opts)
 	if not (type(lhs) == "string") then
 		return
@@ -36,6 +37,7 @@ function _G.keymap(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", default_opts, opts))
 end
 
+-- A function to map keys in normal mode
 function _G.safe_require(module_name)
 	local status, module = pcall(require, module_name)
 	if not status then
@@ -49,6 +51,7 @@ end
 -- Open files with `gf` under the cursor
 source_viml("basic.vim") -- ~/.config/nvim/basic.vim
 source_viml("nvim-basic.vim") -- ~/.config/nvim/nvim-basic.vim
+
 -- Packer plugin manager, configs moved to plugins.lua
 require("plugins") -- ~/.config/nvim/lua/plugins.lua
 -- Load keybindings
@@ -58,4 +61,3 @@ require("colorscheme") -- ~/.config/nvim/lua/colorscheme.lua
 -- LSP
 require("lsp.setup") -- ~/.config/nvim/lua/lsp/setup.lua
 require("cmp.setup") -- ~/.config/nvim/lua/cmp/setup.lua
-require("format.setup") -- ~/.config/nvim/lua/format/setup.lua

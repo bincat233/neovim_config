@@ -1,5 +1,6 @@
 local ok, jdtls = pcall(require, "jdtls")
 -- if jdtls is not installed, give a warning and return
+-- https://stackoverflow.com/questions/74844019/neovim-setting-up-jdtls-with-lsp-zero-mason
 if not ok then
 	vim.notify("jdtls is not installed!", vim.log.levels.WARN)
 	return
@@ -16,7 +17,9 @@ end
 --end
 
 -- If you started neovim within `~/dev/xy/project-1` this would resolve to `project-1`
-local project_dir = vim.fs.dirname(vim.fs.find({ ".gradlew", ".git", "mvnw", ".root" }, { upward = true })[1])
+local project_markers = { ".gradlew", ".gradlew", ".git", "mvnw", ".root" }
+--local project_dir = vim.fs.dirname(vim.fs.find(project_marker, { upward = true })[1])
+local project_dir = jdtls.find_root(project_markers)
 if not project_dir then
 	project_dir = vim.fn.getcwd()
 end
@@ -37,12 +40,11 @@ local config = {
 		--"-configuration", "/home/bear/.cache/jdtls/config",
 		--'-data', '/home/bear/.cache/jdtls/workspace',
 
-		'-configuration', cache_dir .. 'config',
+		--'-configuration', cache_dir .. 'config',
 		"-data", workspace_dir,
 	},
 	root_dir = project_dir,
 	on_attach = function (client, bufnr)
-		require('jdtls.setup').add_commands()
 		require('keybindings').lsp_on_attach_keys_setup(bufnr)
 		require('lsp.lsp_signature').setup(bufnr)
 	end,
