@@ -29,6 +29,8 @@ map({ "v", "x" }, "<C-S-c>", '"+y')
 -- <C-s-x> in visual mode to cut
 map({ "v", "x" }, "<C-S-x>", '"+d')
 
+map("n", "<leader>uH", ":Precognition toggle<CR>", { desc = "Toggle Precognition" })
+
 -- Move selected text
 map("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move selected text down [user]" })
 map("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up [user]" })

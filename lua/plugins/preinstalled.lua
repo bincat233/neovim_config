@@ -63,19 +63,21 @@ return {
         end
         return fallback()
       end
-      -- Remove default <CR> mapping
-      --opts.mapping["<CR>"] = nil
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+      opts.preselect = cmp.PreselectMode.None -- Don't preselect first item
+      opts.completion = { completeopt = "menu,menuone,noselect" } -- Don't preselect first item
+      opts.mapping = vim.tbl_deep_extend("force", opts.mapping, {
         -- Accept currently selected item. If none selected, `select` first item.
         -- Set `select` to `false` to only confirm explicitly selected items.
-        ["<C-h>"] = conferm_selection,
-        --["<C-CR>"] = conferm_selection,
+        -- Remove default <CR> mapping
+        ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Don't select first item
+        ["<C-h>"] = cmp.mapping.abort(),
+        ["<C-c>"] = cmp.mapping.abort(),
         ["<C-l>"] = cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Replace,
           select = true, -- Perselect first item
         }),
         -- Allow scrolling in documentation windows
-        ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
         ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-8), { "i", "c" }),
         ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(8), { "i", "c" }),
@@ -83,7 +85,7 @@ return {
         ["<C-k>"] = cmp.mapping.select_prev_item(), -- Previous
         ["<C-j>"] = cmp.mapping.select_next_item(), -- Next
       })
-      --obj_dump(opts.mapping)
+      --obj_dump(opts.completion)
     end,
   }, -- nvim-cmp (Completion)
   --  {

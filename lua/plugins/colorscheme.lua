@@ -82,8 +82,8 @@ local function is_system_dark()
 end
 
 local setters = {
-  dark = makeSetCsBgFn("catppuccin", "dark"),
-  light = makeSetCsBgFn("tokyonight", "light"),
+  dark = makeSetCsBgFn("github_dark", "dark"),
+  light = makeSetCsBgFn("github_light", "light"),
 }
 -- Set colorscheme based on the environment
 if os.getenv("DISPLAY") == nil and os.getenv("SSH_TTY") == nil then -- If under TTY

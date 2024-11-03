@@ -27,17 +27,19 @@ return {
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyLoad",
         callback = function(event)
-          --if vim.api.nvim_get_hl(0, { name = "DashboardHeader" }) then
-          --  return
-          --end
-          --local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
           if event.data == "dashboard-nvim" then
-            local hex_icon = utils.mix_colors_in_lab("String", "Normal"):to_hex()
             local hex_pikachu = utils.mix_colors_in_lab("#f8ec99", "Normal", -0.2):to_hex()
-            local hex_key = utils.mix_colors_in_lab(hex_pikachu, "Normal"):to_hex()
-            vim.api.nvim_set_hl(0, "DashboardHeader", { fg = hex_pikachu })
-            vim.api.nvim_set_hl(0, "DashboardKey", { fg = hex_key })
-            vim.api.nvim_set_hl(0, "DashboardIcon", { fg = hex_icon })
+            if not vim.api.nvim_get_hl(0, { name = "DashboardHeader" }) then
+              vim.api.nvim_set_hl(0, "DashboardHeader", { fg = hex_pikachu })
+            end
+            if not vim.api.nvim_get_hl(0, { name = "DashboardIcon" }) then
+              local hex_icon = utils.mix_colors_in_lab("String", "Normal"):to_hex()
+              vim.api.nvim_set_hl(0, "DashboardIcon", { fg = hex_icon })
+            end
+            if not vim.api.nvim_get_hl(0, { name = "DashboardKey" }) then
+              local hex_key = utils.mix_colors_in_lab(hex_pikachu, "Normal"):to_hex()
+              vim.api.nvim_set_hl(0, "DashboardKey", { fg = hex_key })
+            end
           end
         end,
       })
