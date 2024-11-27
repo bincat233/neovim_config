@@ -26,17 +26,18 @@ local spec = {
   { dir = "~/Projects/seoul256.nvim" },
 }
 
-local function set_cs(cs)
-  if type(cs) == "string" then -- No fallbacks
-    local status_ok, _ = pcall(vim.cmd.colorscheme, cs)
+local function set_cs(cs_list)
+  if type(cs_list) == "string" then -- No fallbacks
+    local status_ok, _ = pcall(vim.cmd.colorscheme, cs_list)
     if not status_ok then
-      error("Colorscheme " .. cs .. " not found.")
+      error("Colorscheme " .. cs_list .. " not found.")
     end
-  elseif type(cs) == "table" then -- With fallback
+  elseif type(cs_list) == "table" then -- With fallback
     local colorscheme = nil
-    for _, cs in ipairs(cs) do
+    for _, cs in ipairs(cs_list) do
       local status_ok, _ = pcall(vim.cmd.colorscheme, cs)
       if status_ok then
+        colorscheme = cs
         break
       end
     end
@@ -44,7 +45,7 @@ local function set_cs(cs)
       error("No fallbacks colorscheme found.")
     end
     if colorscheme ~= colorscheme[1] then
-      vim.notify("Preferred colorscheme " .. cs[1] .. " not found, fallback to " .. colorscheme)
+      vim.notify("Preferred colorscheme " .. cs_list[1] .. " not found, fallback to " .. colorscheme)
     end
   end
 end

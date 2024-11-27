@@ -21,17 +21,27 @@ return {
   },
   -- NOTE: Config dashboard screen
   {
-    "nvimdev/dashboard-nvim",
+    "folke/snacks.nvim",
     opts = function(_, opts)
-      local new_record = {
-        action = "Leet",
-        desc = " LeetCode",
+      local new_key = {
         icon = " ",
         key = "d",
-        key_format = "  %s",
+        desc = "LeetCode",
+        --action = ":Leet",
+        action = function()
+          local bufs = vim.api.nvim_list_bufs()
+          for _, i in ipairs(bufs) do
+            vim.api.nvim_buf_delete(i, {})
+          end
+          vim.api.nvim_buf_delete(0, {})
+          obj_dump(vim.api.nvim_list_bufs())
+          vim.cmd(":Leet")
+        end,
       }
-      local center = opts.config.center
-      table.insert(center, #center, new_record)
+      local keys = opts.dashboard.preset.keys
+      if keys ~= nil then
+        table.insert(keys, #keys, new_key)
+      end
     end,
   },
 }
