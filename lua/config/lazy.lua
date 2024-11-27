@@ -20,19 +20,19 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras
     { import = "lazyvim.plugins.extras.editor.telescope" }, -- telescope
-    { import = "lazyvim.plugins.extras.lang.tailwind" }, -- css
-    { import = "lazyvim.plugins.extras.lang.git" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" }, -- surround
     { import = "lazyvim.plugins.extras.ui.treesitter-context" }, -- show context of deep nested code
     { import = "lazyvim.plugins.extras.coding.luasnip" }, -- snippets
     { import = "lazyvim.plugins.extras.dap.core" }, -- dap
     { import = "lazyvim.plugins.extras.dap.nlua" }, -- dap
-    { import = "lazyvim.plugins.extras.lang.rust" }, -- rust
+    { import = "lazyvim.plugins.extras.lang.git" },
+    --{ import = "lazyvim.plugins.extras.lang.tailwind" }, -- css
+    --{ import = "lazyvim.plugins.extras.lang.rust" }, -- rust
     { import = "lazyvim.plugins.extras.lang.clangd" }, -- clangd
-    { import = "lazyvim.plugins.extras.lang.python" }, -- python
-    { import = "lazyvim.plugins.extras.lang.typescript" }, -- typescript
+    --{ import = "lazyvim.plugins.extras.lang.python" }, -- python
+    --{ import = "lazyvim.plugins.extras.lang.typescript" }, -- typescript
     { import = "lazyvim.plugins.extras.lang.json" }, -- json
-    { import = "lazyvim.plugins.extras.lang.java" }, -- java
+    --{ import = "lazyvim.plugins.extras.lang.java" }, -- java
     -- import/override with your plugins
     { import = "plugins" },
   },

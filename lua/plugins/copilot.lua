@@ -1,5 +1,5 @@
 return {
-  { import = "lazyvim.plugins.extras.coding.copilot" }, -- copilot
+  { import = "lazyvim.plugins.extras.ai.copilot" }, -- copilot
   { "zbirenbaum/copilot-cmp" },
   { "nvim-cmp" },
 }
