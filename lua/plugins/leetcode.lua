@@ -30,11 +30,11 @@ return {
         --action = ":Leet",
         action = function()
           local bufs = vim.api.nvim_list_bufs()
-          for _, i in ipairs(bufs) do
-            vim.api.nvim_buf_delete(i, {})
+          for i = 2, #bufs, 1 do
+            local b = bufs[i]
+            vim.api.nvim_buf_delete(b, {})
           end
-          vim.api.nvim_buf_delete(0, {})
-          obj_dump(vim.api.nvim_list_bufs())
+          vim.bo[1].buflisted = false
           vim.cmd(":Leet")
         end,
       }

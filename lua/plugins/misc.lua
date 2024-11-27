@@ -6,10 +6,10 @@ return {
   { "dstein64/nvim-scrollview" },
   -- NOTE: lazy calls setup() by itself
   -- https://github.com/danilamihailov/beacon.nvim
-  {
-    "danilamihailov/beacon.nvim",
-    event = "BufEnter",
-  },
+  --{
+  --  "danilamihailov/beacon.nvim",
+  --  event = "BufEnter",
+  --},
   -- NOTE: Enhance the experience of marks
   -- https://github.com/chentoast/marks.nvim
   {
