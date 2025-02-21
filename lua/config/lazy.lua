@@ -26,6 +26,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.dap.core" }, -- dap
     { import = "lazyvim.plugins.extras.dap.nlua" }, -- dap
     { import = "lazyvim.plugins.extras.lang.git" },
+    { import = "lazyvim.plugins.extras.editor.navic" }, --winbar
     --{ import = "lazyvim.plugins.extras.lang.tailwind" }, -- css
     --{ import = "lazyvim.plugins.extras.lang.rust" }, -- rust
     { import = "lazyvim.plugins.extras.lang.clangd" }, -- clangd

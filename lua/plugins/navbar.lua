@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 return {
-  { import = "lazyvim.plugins.extras.editor.navic" }, --winbar
+  --{ import = "lazyvim.plugins.extras.editor.navic" }, --winbar
   {
     "SmiteshP/nvim-navic",
     opts = function(_, opts)
@@ -82,22 +82,22 @@ return {
               if w_first_line == 1 and vim.g.navicshown and navbar == "" then
                 navbar = "%#NavicSeparator# %*%#NavicText# %*"
               end
-              -- TODO: What if we switch to another window?
-              -- Show --> hide
-              if vim.g.navicshown and navbar == "" then
-                vim.g.navicshown = false
-                if w_height - c_height > scrolloff then
-                  -- Curser not on the bottom 5 lines (弹开cursor)
-                  utils.scroll_viewport(-1)
-                else
-                  -- 反向移动, 我弹开我自己
-                  utils.scroll_viewport(scrolloff + c_height - vim.fn.winheight(0))
-                end
-              -- Hide --> show
-              elseif not vim.g.navicshown and navbar ~= "" then
-                vim.g.navicshown = true
-                utils.scroll_viewport(1)
-              end
+              ---- TODO: What if we switch to another window?
+              ---- Show --> hide
+              --if vim.g.navicshown and navbar == "" then
+              --  vim.g.navicshown = false
+              --  if w_height - c_height > scrolloff then
+              --    -- Curser not on the bottom 5 lines (弹开cursor)
+              --    utils.scroll_viewport(-1)
+              --  else
+              --    -- 反向移动, 我弹开我自己
+              --    utils.scroll_viewport(scrolloff + c_height - vim.fn.winheight(0))
+              --  end
+              ---- Hide --> show
+              --elseif not vim.g.navicshown and navbar ~= "" then
+              --  vim.g.navicshown = true
+              --  utils.scroll_viewport(1)
+              --end
               navbar = navbar:gsub("(#NavicIcons.-#)", "%1 ", 1)
               return navbar
             end,

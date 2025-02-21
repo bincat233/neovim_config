@@ -53,6 +53,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
+      utils.obj_dump(opts)
       local cmp = require("cmp")
       local function conferm_selection(fallback)
         if cmp.core.view:visible() or vim.fn.pumvisible() == 1 then
