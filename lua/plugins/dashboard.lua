@@ -1,29 +1,33 @@
 local ascii_art = {
   [[
-        ▀████▀▄▄              ▄█ 
-          █▀    ▀▀▄▄▄▄▄    ▄▄▀▀█ 
-  ▄        █          ▀▀▀▀▄  ▄▀  
- ▄▀ ▀▄      ▀▄              ▀▄▀  
-▄▀    █     █▀   ▄█▀▄      ▄█    
-▀▄     ▀▄  █     ▀██▀     ██▄█   
- ▀▄    ▄▀ █   ▄██▄   ▄  ▄  ▀▀ █  
-  █  ▄▀  █    ▀██▀    ▀▀ ▀▀  ▄▀  
- █   █  █      ▄▄           ▄▀   
+                      ▀████▀▄▄              ▄█ 
+                        █▀    ▀▀▄▄▄▄▄    ▄▄▀▀█ 
+                ▄        █          ▀▀▀▀▄  ▄▀  
+               ▄▀ ▀▄      ▀▄              ▀▄▀  
+              ▄▀    █     █▀   ▄█▀▄      ▄█    
+              ▀▄     ▀▄  █     ▀██▀     ██▄█   
+               ▀▄    ▄▀ █   ▄██▄   ▄  ▄  ▀▀ █  
+                █  ▄▀  █    ▀██▀    ▀▀ ▀▀  ▄▀  
+               █   █  █      ▄▄           ▄▀   
 ]],
 }
 return {
   {
     "folke/snacks.nvim",
-    disable = true,
+    --disable = true,
     opts = function(_, opts)
       opts.dashboard.preset.header = ascii_art
-
+      opts.dashboard.formats = {
+        header = { "%s", align = "center" },
+      }
       -- Set a custom header color, when the dashboard is ready
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyLoad",
         callback = function(event)
-          if event.data == "dashboard-nvim" then
-            local hex_pikachu = utils.mix_colors_in_lab("#f8ec99", "Normal", -0.2):to_hex()
+          if event.data == "snacks.nvim" then
+            local hex_bg = string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Normal" }).bg)
+            local hex_pikachu = utils.mix_colors_in_lab("#f8ec99", hex_bg, -0.2):to_hex()
+            vim.api.nvim_set_hl(0, "SnacksDashboardNormal", { fg = hex_pikachu })
             if not vim.api.nvim_get_hl(0, { name = "SnacksDashboardHeader" }) then
               vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = hex_pikachu })
             end

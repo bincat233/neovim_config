@@ -1,3 +1,8 @@
+if true then
+  return {}
+end
+-- Disable this plugin
+
 return {
   -- NOTE: Colorizer / Color Picker
   -- https://github.com/uga-rosa/ccc.nvim
