@@ -32,9 +32,9 @@ local function set_hl()
   math.randomseed(os.time())
   for _, group in ipairs(hl_groups) do
     -- Set to a random color
-    local bg = utils.get_highlight_hex("Normal", "bg")
-    local random_color = utils.rgb_to_hex(utils.generate_distinct_color_in_lab(bg, 75))
-    vim.api.nvim_set_hl(0, group, { fg = random_color })
+    --local bg = utils.get_highlight_hex("Normal", "bg")
+    --local random_color = utils.rgb_to_hex(utils.generate_distinct_color_in_lab(bg, 75))
+    --vim.api.nvim_set_hl(0, group, { fg = random_color })
   end
   vim.api.nvim_set_hl(0, "NavicText", { link = "@text" })
   vim.api.nvim_set_hl(0, "NavicSeparator", { link = "Comment" })
@@ -55,6 +55,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 return {
+  {
+    "SmiteshP/nvim-navbuddy",
+    opts = { lsp = { auto_attach = true } },
+  },
   --{ import = "lazyvim.plugins.extras.editor.navic" }, --winbar
   {
     "SmiteshP/nvim-navic",

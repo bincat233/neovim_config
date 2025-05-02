@@ -1,5 +1,6 @@
 return {
   {
+    -- Read https://github.com/stevearc/conform.nvim
     "stevearc/conform.nvim",
     opts = function(_, opts)
       local options = {
@@ -16,6 +17,7 @@ return {
           bash = { "beautysh" },
           zsh = { "beautysh" },
           xml = { "xmlformat", "xmllint" },
+          python = { "isort", "ruff" },
         },
         -- The options you set here will be merged with the builtin formatters.
         -- You can also define any custom formatters here.
@@ -35,6 +37,8 @@ return {
         },
       }
       opts = vim.tbl_deep_extend("force", opts, options) --[[@as table]]
+      --obj_dump(opts)
+      return opts
     end,
   },
 }
