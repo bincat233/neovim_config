@@ -1,3 +1,4 @@
+-- NOTE: Don't use LazyExtra lang-java
 return {
   "nvim-java/nvim-java",
   config = false,

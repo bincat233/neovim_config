@@ -69,11 +69,24 @@ local function set_bg(bg, opt)
   vim.o.background = bg
 end
 
+local function apply_theme(cs, bg)
+  vim.o.background = bg
+  set_cs(cs)
+end
+
 local function makeSetCsBgFn(cs, bg)
   return function()
     set_cs(cs)
     set_bg(bg, { colorscheme = cs })
   end
+end
+
+local function is_tty()
+  return not os.getenv("DISPLAY") and not os.getenv("SSH_TTY")
+end
+
+local function in_project(name)
+  return vim.fn.getcwd():find(name)
 end
 
 local function is_system_dark()
@@ -83,34 +96,32 @@ local function is_system_dark()
     or os.getenv("UI_DARK_MODE") == "true"
 end
 
-local setters = {
-  dark = makeSetCsBgFn("github_dark", "dark"),
-  light = makeSetCsBgFn("github_light", "light"),
-}
 -- Set colorscheme based on the environment
-if os.getenv("DISPLAY") == nil and os.getenv("SSH_TTY") == nil then -- If under TTY
+if is_tty() then -- If under TTY
   spec[1].opts.colorscheme = function()
     set_cs({ "solarized", "base16-default-dark", "default" }) -- Set colorscheme to solarized
     set_bg("dark")
   end
-elseif vim.fn.getcwd():find("seoul256") then
+elseif in_project("seoul256") then
   spec[1].opts.colorscheme = makeSetCsBgFn("seoul256", "dark")
 elseif is_system_dark() then -- GUI and dark mode
-  spec[1].opts.colorscheme = setters.dark
+  spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "dark")
 else -- GUI and light mode
-  spec[1].opts.colorscheme = setters.light
+  spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "light")
 end
 
 local function set_dark(dark)
   if dark == 0 or dark == nil or dark == false or dark == "" then
-    setters.light()
+    spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "light")
   else
-    setters.dark()
+    spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "dark")
   end
 end
 
 _G.set_bg = set_bg
 _G.set_cs = set_cs
 _G.set_dark = set_dark
+
+vim.api.nvim_create_user_command("DarkMode", _G.set_dark, {})
 
 return spec
