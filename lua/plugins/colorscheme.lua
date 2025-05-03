@@ -23,7 +23,8 @@ local spec = {
   { "NLKNguyen/papercolor-theme" },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "projekt0n/github-nvim-theme" },
-  { dir = "~/Projects/seoul256.nvim" },
+  --{ dir = "~/Projects/seoul256.nvim" },
+  { "bincat233/seoul256.nvim" },
 }
 
 local function set_cs(cs_list)
