@@ -20,16 +20,19 @@ A modern Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 ## 🚀 Installation
 
 1. Backup your existing Neovim configuration (if any):
+
    ```bash
    mv ~/.config/nvim ~/.config/nvim.bak
    ```
 
 2. Clone this repository:
+
    ```bash
    git clone https://github.com/yourusername/neovim-config ~/.config/nvim
    ```
 
 3. Start Neovim and wait for the plugins to be installed:
+
    ```bash
    nvim
    ```
@@ -43,6 +46,7 @@ A modern Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 ## 📚 Key Mappings
 
 ### Normal Mode
+
 - `<leader>pv`: Open file explorer
 - `<C-p>`: Fuzzy find files
 - `<leader>ff`: Find files
@@ -50,6 +54,7 @@ A modern Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 - `<leader>h`: Clear search highlights
 
 ### Insert Mode
+
 - `jk`: Return to normal mode
 - `kj`: Alternative to jk
 
@@ -64,6 +69,7 @@ This configuration uses [Lazy.nvim](https://github.com/folke/lazy.nvim) for plug
 ## 📖 Documentation
 
 For detailed documentation, please refer to:
+
 - [LazyVim Documentation](https://lazyvim.github.io/)
 - [Neovim Documentation](https://neovim.io/doc/)
 
@@ -73,4 +79,4 @@ Feel free to submit issues and enhancement requests.
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License.
