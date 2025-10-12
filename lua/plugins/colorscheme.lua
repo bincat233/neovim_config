@@ -7,13 +7,21 @@ local spec = {
     },
   },
   -- add colorscheme
-  { "oahlen/iceberg.nvim" },
-  { "ellisonleao/gruvbox.nvim" },
+  --{ "oahlen/iceberg.nvim" },
+  --{ "ellisonleao/gruvbox.nvim" },
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
     opts = {},
+  },
+  {
+    "uZer/pywal16.nvim",
+    -- for local dev replace with:
+    -- dir = '~/your/path/pywal16.nvim',
+    config = function()
+      vim.cmd.colorscheme("pywal16")
+    end,
   },
   { "altercation/vim-colors-solarized" }, -- Has good support under TTYs
   --{"shaunsingh/seoul256.nvim"}, -- nvim port of seoul256, but without light theme

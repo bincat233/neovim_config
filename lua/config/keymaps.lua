@@ -4,6 +4,11 @@
 local map = vim.keymap.set
 local wkadd = require("which-key").add
 
+if vim.g.neovide == true then
+  vim.keymap.set({ "n", "x" }, "<C-S-C>", '"+y', { desc = "Copy system clipboard" })
+  vim.keymap.set({ "n", "x" }, "<C-S-V>", '"+p', { desc = "Paste system clipboard" })
+end
+
 -- Use leader key + u v to toggle list mode on/off
 map("n", "<leader>ul", ":set list!<CR>", { desc = "Toggle list mode [user]" })
 

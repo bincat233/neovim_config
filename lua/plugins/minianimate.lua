@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.animate",
+  "nvim-mini/mini.animate",
   opts = function(_, opts)
     opts.cursor = {
       -- Whether to enable this animation
