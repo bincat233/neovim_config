@@ -1,0 +1,135 @@
+local spec = {
+  -- Configure LazyVim to load gruvbox
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = nil,
+    },
+  },
+  -- add colorscheme
+  --{ "oahlen/iceberg.nvim" },
+  --{ "ellisonleao/gruvbox.nvim" },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    "uZer/pywal16.nvim",
+    -- for local dev replace with:
+    -- dir = '~/your/path/pywal16.nvim',
+    config = function()
+      vim.cmd.colorscheme("pywal16")
+    end,
+  },
+  { "altercation/vim-colors-solarized" }, -- Has good support under TTYs
+  --{"shaunsingh/seoul256.nvim"}, -- nvim port of seoul256, but without light theme
+  --{"cocopon/iceberg.vim"}, -- My favorite colorscheme with best light theme
+  --{ "junegunn/seoul256.vim" }, -- Low contrast colorscheme
+  --{ "shaunsingh/seoul256.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "projekt0n/github-nvim-theme" },
+  --{ dir = "~/Projects/seoul256.nvim" },
+  { "bincat233/seoul256.nvim" },
+}
+
+local function set_cs(cs_list)
+  if type(cs_list) == "string" then -- No fallbacks
+    local status_ok, _ = pcall(vim.cmd.colorscheme, cs_list)
+    if not status_ok then
+      error("Colorscheme " .. cs_list .. " not found.")
+    end
+  elseif type(cs_list) == "table" then -- With fallback
+    local colorscheme = nil
+    for _, cs in ipairs(cs_list) do
+      local status_ok, _ = pcall(vim.cmd.colorscheme, cs)
+      if status_ok then
+        colorscheme = cs
+        break
+      end
+    end
+    if colorscheme == nil then
+      error("No fallbacks colorscheme found.")
+    end
+    if colorscheme ~= colorscheme[1] then
+      vim.notify("Preferred colorscheme " .. cs_list[1] .. " not found, fallback to " .. colorscheme)
+    end
+  end
+end
+
+local function set_bg(bg, opt)
+  opt = opt or { colorscheme = nil }
+  local cs = opt.colorscheme or vim.g.colors_name
+  if cs then
+    local base_cs = cs:gsub("[-_]dark$", ""):gsub("[-_]light$", "")
+    local sub_css = vim.fn.getcompletion(base_cs, "color")
+    local target_cs = base_cs
+    for _, sub_cs in ipairs(sub_css) do
+      if sub_cs:find(bg) then
+        target_cs = sub_cs
+        break
+      end
+    end
+    vim.cmd.colorscheme(target_cs)
+  end
+  vim.o.background = bg
+end
+
+local function apply_theme(cs, bg)
+  vim.o.background = bg
+  set_cs(cs)
+end
+
+local function makeSetCsBgFn(cs, bg)
+  return function()
+    set_cs(cs)
+    set_bg(bg, { colorscheme = cs })
+  end
+end
+
+local function is_tty()
+  return not os.getenv("DISPLAY") and not os.getenv("SSH_TTY")
+end
+
+local function in_project(name)
+  return vim.fn.getcwd():find(name)
+end
+
+local function is_system_dark()
+  return vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):find("dark")
+    or vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):find("dark")
+    or vim.fn.system("gsettings get org.gnome.desktop.interface gtk-color-scheme"):find("dark")
+    or os.getenv("UI_DARK_MODE") == "true"
+end
+
+-- Set colorscheme based on the environment
+if is_tty() then -- If under TTY
+  spec[1].opts.colorscheme = function()
+    set_cs({ "solarized", "base16-default-dark", "default" }) -- Set colorscheme to solarized
+    set_bg("dark")
+  end
+elseif in_project("seoul256") then
+  spec[1].opts.colorscheme = makeSetCsBgFn("seoul256", "dark")
+elseif is_system_dark() then -- GUI and dark mode
+  spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "dark")
+else -- GUI and light mode
+  spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "light")
+end
+
+local function set_dark(dark)
+  if dark == 0 or dark == nil or dark == false or dark == "" then
+    spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "light")
+  else
+    spec[1].opts.colorscheme = makeSetCsBgFn("github_dark", "dark")
+  end
+end
+
+_G.set_bg = set_bg
+_G.set_cs = set_cs
+_G.set_dark = set_dark
+
+vim.api.nvim_create_user_command("DarkMode", _G.set_dark, {})
+
+return spec
