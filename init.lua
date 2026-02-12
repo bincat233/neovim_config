@@ -14,10 +14,6 @@
 --	vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", default_opts, opts))
 --end
 
--- Get strucutre of a table
-_G.utils = require("local.utils")
-_G.obj_dump = _G.utils.obj_dump
-
 -- Set `in_editor` variable in Kitty terminal to `1` when entering Neovim
 vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
   group = vim.api.nvim_create_augroup("KittySetVarVimEnter", { clear = true }),
