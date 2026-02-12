@@ -61,20 +61,6 @@ end
 
 -- vimscript part
 vim.cmd([[
-" Toggle relative line numbers automatically
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-augroup END
-
-" Turn on wrapping when editing text files
-augroup Markdown
-  autocmd!
-  autocmd FileType markdown set wrap
-	autocmd FileType text setlocal wrap
-augroup END
-
 iabbrev @@ isxiongzj@gmail.com " Set email address
 
 " Set the mouse menu

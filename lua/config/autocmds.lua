@@ -29,3 +29,19 @@ local function binary_editor()
 end
 
 binary_editor()
+
+vim.cmd([[
+" Toggle relative line numbers automatically
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
+
+" Turn on wrapping when editing text files
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+	autocmd FileType text setlocal wrap
+augroup END
+]])

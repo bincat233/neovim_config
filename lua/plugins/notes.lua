@@ -1,5 +1,4 @@
 return {
-  { "h-hg/fcitx.nvim" },
   -- NOTE: Manage and edit obsidian notes
   -- https://github.com/epwalsh/obsidian.nvim
   {
