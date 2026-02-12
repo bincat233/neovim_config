@@ -1,6 +1,5 @@
 local function read_ascii(name)
   local path = vim.fn.stdpath("config") .. "/asciiart/" .. name
-  vim.notify("Reading ASCII art from: " .. path)
 
   local f = io.open(path, "r")
   if not f then

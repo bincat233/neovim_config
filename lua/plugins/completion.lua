@@ -1,7 +1,6 @@
 return {
   {
     "saghen/blink.cmp",
-    build = "cargo +nightly build --release",
     opts = function(_, opts)
       opts.completion.list = { selection = { preselect = false } }
       opts.keymap = {
@@ -15,6 +14,7 @@ return {
         ["<C-j>"] = { "select_next" },
         ["<C-k>"] = { "select_prev" },
       }
+      --obj_dump(opts)
     end,
   },
 }

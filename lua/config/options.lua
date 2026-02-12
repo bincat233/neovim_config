@@ -17,7 +17,6 @@ opt.whichwrap:append("<,>,[,]") -- Move to next line with theses keys
 opt.cursorline = true -- Highlight current line
 opt.cursorcolumn = true -- Highlight current column
 opt.mousemoveevent = true -- Enable mouse support
-opt.wildmenu = true -- Show command-line completion candidates in a horizontal menu
 opt.showmatch = true -- Show matching brackets
 --opt.updatetime = 200 -- Faster completion
 opt.pumblend = 18 -- Popup menu transparency

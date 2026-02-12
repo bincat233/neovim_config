@@ -71,8 +71,8 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      opts.winbar = {
+    opts = {
+      winbar = {
         lualine_c = {
           {
             function()
@@ -111,7 +111,7 @@ return {
             end,
           },
         },
-      }
-    end,
+      },
+    },
   },
 }
