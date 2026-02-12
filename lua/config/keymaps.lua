@@ -34,8 +34,6 @@ map({ "v", "x" }, "<C-S-c>", '"+y')
 -- <C-s-x> in visual mode to cut
 map({ "v", "x" }, "<C-S-x>", '"+d')
 
-map("n", "<leader>uH", ":Precognition toggle<CR>", { desc = "Toggle Precognition" })
-
 -- Move selected text
 map("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move selected text down [user]" })
 map("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up [user]" })
@@ -57,22 +55,6 @@ map("x", "<A-LeftMouse>", "<bs>", { remap = true, silent = true }) --node_decrem
 
 --map("n", "<A-f>", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
 
-map("v", "<C-t>", ":Translate ZH<CR>gv", { desc = "Translate selection", silent = false })
-map("i", "<C-t>", "<Esc>m`V:Translate -output=insert EN<CR>k``a", { desc = "Translate selection", silent = false })
 wkadd({ "<leader>t", nil, desc = "translation", icon = "" })
-map("n", "<leader>tw", "m`viw:Translate ZH<CR>``", { desc = "Translate word under cursor" })
-map("n", "<leader>tt", "m`V:Translate ZH<CR>``", { desc = "Translate line under cursor" })
---map("n", "<space>ta", "ggVG:Translate -output=split ZH<CR>", { desc = "Translate the page" })
-map("n", "<leader>ta", function()
-  -- Save the current cursor position
-  local current_pos = vim.fn.getpos(".")
-  -- Select full text
-  vim.cmd("normal! ggVG")
-  -- Execute translation
-  vim.cmd("Translate -output=split ZH")
-  -- Exit visual mode
-  vim.api.nvim_input("<ESC>")
-  -- Restore cursor position
-  vim.fn.setpos(".", current_pos)
-end, { desc = "Translate the page" })
+
 --map("i", "<C-t>", "<ESC>V:Translate -output=insert ZH<CR>", { silent = true })
