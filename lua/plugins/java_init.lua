@@ -1,6 +1,7 @@
 -- NOTE: Don't use LazyExtra lang-java
 return {
   "nvim-java/nvim-java",
+  ft = "java",
   config = false,
   dependencies = {
     {
