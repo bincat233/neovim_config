@@ -14,6 +14,29 @@ return {
     },
   },
   {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      input = { enabled = false },
+    },
+  },
+
+  {
+    "mini.hipatterns",
+    opts = function(_, opts)
+      --require("local.debug").obj_dump(opts)
+      --local hi = require("mini.hipatterns")
+      opts.highlighters.rrggbbaa = {
+        pattern = "#%x%x%x%x%x%x%x%x",
+        group = function(_, _, data)
+          local match = data.full_match
+          local rrggbb = match:sub(1, 7)
+          return MiniHipatterns.compute_hex_color_group(rrggbb, "bg")
+        end,
+      }
+    end,
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     opts = function(_, opts)
       -- Let neo-tree act like netrw
