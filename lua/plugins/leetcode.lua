@@ -3,6 +3,7 @@ return {
   -- https://github.com/kawre/leetcode.nvim
   {
     "kawre/leetcode.nvim",
+    cmd = "Leet",
     build = ":TSUpdate html",
     dependencies = {
       "nvim-telescope/telescope.nvim",
