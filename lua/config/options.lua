@@ -42,12 +42,15 @@ elseif vim.fn.has("mac") == 1 then
 end
 
 --vim.g.trouble_lualine = false -- Enable Winbar for lualine
+-- Native inline completions don't support being shown as regular completions
+--vim.g.ai_cmp = false
 
 -- Configurations for different GUIs
 if vim.g.neovide then
   -- If the GUI is Neovide
   -- vim.o.guifont = "Fira Code Nerd Font:h14"
-  vim.o.guifont = "monospace:h10:#e-subpixelantialias"
+  vim.o.guifont = "monospace:h11:#e-subpixelantialias"
+  vim.opt.linespace = 0
   --Disable mini.anamate
   vim.g.minianimate_disable = true
 elseif vim.g.gonvim_running then

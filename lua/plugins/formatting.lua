@@ -1,6 +1,7 @@
 return {
   {
     -- Read https://github.com/stevearc/conform.nvim
+    -- See also https://www.lazyvim.org/plugins/formatting
     "stevearc/conform.nvim",
     opts = function(_, opts)
       local options = {
@@ -14,6 +15,8 @@ return {
           lua = { "stylua" },
           fish = { "fish_indent" },
           sh = { "shfmt" },
+          json = { "prettier" },
+          jsonc = { "prettier" },
           bash = { "beautysh" },
           zsh = { "beautysh" },
           xml = { "xmlformat", "xmllint" },

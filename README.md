@@ -1,82 +1,64 @@
-# 🚀 Neovim Configuration
+# Neovim Config
 
-A modern Neovim configuration built on [LazyVim](https://github.com/LazyVim/LazyVim), a powerful and extensible Neovim setup.
+基于 [LazyVim](https://github.com/LazyVim/LazyVim) 的个人配置，使用 `lazy.nvim` 管理插件。
 
-## ✨ Features
+## Requirements
 
-- 🚀 Blazing fast startup time with lazy loading
-- 🎨 Beautiful and modern UI with built-in themes
-- ⚡ Optimized for both speed and productivity
-- 🔌 Plugin management via Lazy.nvim
-- 📦 Pre-configured with essential plugins
-- 🛠️ Easy to customize and extend
-
-## 📦 Prerequisites
-
-- Neovim 0.9.0 or later
+- Neovim >= 0.9
 - Git
-- A Nerd Font (recommended: [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads))
+- Nerd Font（建议）
 
-## 🚀 Installation
+## Quick Start
 
-1. Backup your existing Neovim configuration (if any):
+```bash
+git clone <your-repo> ~/.config/nvim
+nvim
+```
 
-   ```bash
-   mv ~/.config/nvim ~/.config/nvim.bak
-   ```
+首次启动会自动安装 `lazy.nvim` 与插件。
 
-2. Clone this repository:
+## Project Structure
 
-   ```bash
-   git clone https://github.com/yourusername/neovim-config ~/.config/nvim
-   ```
+```text
+.
+├── init.lua                  # 入口：终端变量相关 autocmd + 启动 lazy
+├── lua/config/
+│   ├── lazy.lua              # lazy.nvim 引导 + LazyVim extras + plugins import
+│   ├── options.lua           # 基础选项
+│   ├── keymaps.lua           # 键位映射
+│   └── autocmds.lua          # 自动命令
+├── lua/plugins/              # 插件配置（按功能拆分）
+├── lua/local/
+│   ├── color.lua             # 颜色工具
+│   ├── debug.lua             # 调试工具
+│   └── utils.lua             # 通用工具（含平台检测 get_env）
+├── after/colors/pywal16.lua  # 颜色主题后置覆盖
+└── asciiart/                 # Dashboard 资源
+```
 
-3. Start Neovim and wait for the plugins to be installed:
+## Conventions
 
-   ```bash
-   nvim
-   ```
+- `lua/local/` 固定仅保留 3 个文件：`color.lua`、`debug.lua`、`utils.lua`。
+- 不在 `utils.lua` 中聚合或 merge `color/debug`；按需直接 `require("local.color")` / `require("local.debug")`。
+- 新增插件优先放在 `lua/plugins/` 下独立文件，保持单文件单职责。
 
-## 🛠️ Customization
+## Colorscheme Strategy
 
-- Add your own plugins in `lua/plugins/` directory
-- Modify keymaps in `lua/config/keymaps.lua`
-- Change theme in `lua/config/options.lua`
+`lua/plugins/colorscheme.lua` 使用 `require("local.utils").get_env()` 做平台判断：
 
-## 📚 Key Mappings
+- `linux_console` -> `solarized` + `termguicolors=false`
+- `windows` / `macos` -> `github_dark`
+- Linux GUI -> `pywal16` + `darkman.nvim`
+- 当前目录命中 `seoul256` 项目名时，切换到 `seoul256`
 
-### Normal Mode
+## Daily Commands
 
-- `<leader>pv`: Open file explorer
-- `<C-p>`: Fuzzy find files
-- `<leader>ff`: Find files
-- `<leader>fs`: Search in files
-- `<leader>h`: Clear search highlights
+- `:Lazy`：查看插件状态
+- `:Lazy sync`：同步插件
+- `:checkhealth`：环境健康检查
+- `:source $HOME/.config/nvim/init.lua`：重载入口文件
 
-### Insert Mode
+## Notes
 
-- `jk`: Return to normal mode
-- `kj`: Alternative to jk
-
-## 🔌 Plugin Management
-
-This configuration uses [Lazy.nvim](https://github.com/folke/lazy.nvim) for plugin management. To add new plugins:
-
-1. Create or edit a file in `lua/plugins/`
-2. Add your plugin configuration following the Lazy.nvim format
-3. Run `:Lazy sync` to install/update plugins
-
-## 📖 Documentation
-
-For detailed documentation, please refer to:
-
-- [LazyVim Documentation](https://lazyvim.github.io/)
-- [Neovim Documentation](https://neovim.io/doc/)
-
-## 🤝 Contributing
-
-Feel free to submit issues and enhancement requests.
-
-## 📜 License
-
-This project is licensed under the Apache License.
+- `lazy-lock.json` 已启用并建议纳入版本控制。
+- 若修改主题或 UI 配置，建议同时检查 `after/colors/pywal16.lua` 的覆盖效果。
