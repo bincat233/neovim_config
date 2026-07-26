@@ -19,6 +19,7 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras
+    { import = "lazyvim.plugins.extras.editor.fzf" },
     { import = "lazyvim.plugins.extras.ai.avante" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" }, -- surround
     { import = "lazyvim.plugins.extras.ui.treesitter-context" }, -- show context of deep nested code
@@ -32,13 +33,14 @@ require("lazy").setup({
     --{ import = "lazyvim.plugins.extras.lang.typescript" }, -- typescript
     { import = "lazyvim.plugins.extras.lang.clangd" }, -- clangd
     { import = "lazyvim.plugins.extras.lang.json" }, -- json
+    { import = "lazyvim.plugins.extras.test.core" }, -- neotest
     -- import/override with your plugins
     { import = "plugins" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = false,
+    lazy = true,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
@@ -49,6 +51,11 @@ require("lazy").setup({
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
+  git = {
+    -- clone/fetch over SSH (authenticated as your GitHub account) instead of
+    -- anonymous HTTPS, which has a much lower and stricter rate limit
+    url_format = "git@github.com:%s.git",
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins
