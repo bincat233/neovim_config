@@ -1,5 +1,7 @@
 local theme_path = vim.fn.stdpath("data") .. "/lazy/pywal16.nvim/colors/pywal16.vim"
 
+-- INFO: Set environment variable PYWAL16_DEBUG=1 to enable debug notifications
+
 local function adjust_hex(hex, percent)
   hex = hex:gsub("#", "")
   local function clamp(v)
@@ -95,7 +97,9 @@ vim.api.nvim_create_autocmd("OptionSet", {
     if vim.g.colors_name ~= "pywal16" then
       return
     end
-    vim.notify("Background changed, reloading pywal16...", vim.log.levels.INFO)
+    if vim.env.PYWAL16_DEBUG then
+      vim.notify("Background changed, reloading pywal16...", vim.log.levels.DEBUG)
+    end
     vim.schedule(hard_reload_pywal16)
   end,
 })
