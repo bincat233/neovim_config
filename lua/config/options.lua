@@ -20,6 +20,8 @@ opt.mousemoveevent = true -- Enable mouse support
 opt.showmatch = true -- Show matching brackets
 --opt.updatetime = 200 -- Faster completion
 opt.pumblend = 18 -- Popup menu transparency
+opt.breakindent = true -- Enable break indent
+opt.softtabstop = -1 -- Let it follow shiftwidth
 
 -- Cursor motion
 --opt.scrolloff = 2 -- Keep N lines above and below the cursor
@@ -48,17 +50,17 @@ end
 -- Configurations for different GUIs
 if vim.g.neovide then
   -- If the GUI is Neovide
-  -- vim.o.guifont = "Fira Code Nerd Font:h14"
-  vim.o.guifont = "monospace:h11:#e-subpixelantialias"
-  vim.opt.linespace = 0
+  -- opt.guifont = "Fira Code Nerd Font:h14"
+  opt.guifont = "monospace:h11:#e-subpixelantialias"
+  opt.linespace = 0
   --Disable mini.anamate
   vim.g.minianimate_disable = true
 elseif vim.g.gonvim_running then
-  -- If the GUI is Gonvim
+  -- If the GeI is Gonvim
   -- Useful commands: GonvimFilerOpen GonvimMiniMap
   -- GonvimWorkspaceNew GonvimWorkspaceNext GonvimWorkspacePrevious GonvimWorkspaceSwitch n
   -- Remove the eol character because Gonvim's cursor not compatible with it
-  --vim.o.listchars = vim.o.listchars .. ",eol:\\ "
+  --opt.listchars = opt.listchars .. ",eol:\\ "
   vim.g.minianimate_disable = true
 end
 
@@ -68,6 +70,6 @@ iabbrev @@ isxiongzj@gmail.com " Set email address
 
 " Set the mouse menu
 " Remove the default menu
-unmenu PopUp.-1- 
+unmenu PopUp.-1-
 unmenu PopUp.How-to\ disable\ mouse
 ]])
