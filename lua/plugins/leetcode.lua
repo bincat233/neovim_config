@@ -6,18 +6,35 @@ return {
     cmd = "Leet",
     build = ":TSUpdate html",
     dependencies = {
-      "nvim-telescope/telescope.nvim",
+      "ibhagwan/fzf-lua",
+      --"nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim", -- required by telescope
       "MunifTanjim/nui.nvim",
 
       -- optional
+      "3rd/image.nvim",
       "nvim-treesitter/nvim-treesitter",
       "rcarriga/nvim-notify",
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
       -- configuration goes here
-      --image_support = true,
+      image_support = true,
+      lang = "java",
+      hooks = {
+        ["enter"] = function()
+          -- 禁用 Copilot
+          pcall(function()
+            vim.cmd("Copilot disable")
+          end)
+        end,
+        ["leave"] = function()
+          -- 退出时重新启用 Copilot
+          pcall(function()
+            vim.cmd("Copilot enable")
+          end)
+        end,
+      },
     },
   },
   -- NOTE: Config dashboard screen
@@ -43,6 +60,7 @@ return {
       if keys ~= nil then
         table.insert(keys, #keys, new_key)
       end
+      return opts
     end,
   },
 }
