@@ -57,6 +57,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 return {
   {
     "hasansujon786/nvim-navbuddy",
+    cmd = "Navbuddy",
     opts = { lsp = { auto_attach = true } },
   },
   --{ import = "lazyvim.plugins.extras.editor.navic" }, --winbar
@@ -116,6 +117,45 @@ return {
         lualine_x = {
           {
             function()
+              local ok, config = pcall(require, "avante.config")
+              if not ok then
+                return ""
+              end
+              local provider = config.provider
+              local provider_cfg = config.get_provider_config(provider)
+              if not provider_cfg then
+                return ""
+              end
+              local model = provider_cfg.model or provider
+              -- Shorten common model names for statusline display
+              local display = model
+                :gsub("%-20%d+%-%d+%-%d+", "") -- strip date versions
+                :gsub("%-preview.*", "") -- strip preview suffixes
+                :gsub("claude%-sonnet%-4", "sonnet4")
+                :gsub("claude%-opus%-4", "opus4")
+                :gsub("claude%-haiku%-4", "haiku4")
+                :gsub("gpt%-4o%-codex", "gpt4o-codex")
+                :gsub("gpt%-4o%-mini", "gpt4o-mini")
+                :gsub("gpt%-4o", "gpt4o")
+                :gsub("deepseek%-v4%-pro", "ds-v4p")
+                :gsub("deepseek%-v4%-flash", "ds-v4f")
+                :gsub("deepseek%-chat", "ds-chat")
+                :gsub("deepseek%-v3", "ds-v3")
+                :gsub("deepseek%-r1", "ds-r1")
+                :gsub("gemini%-2.5%-pro", "gem25pro")
+                :gsub("gemini%-2.5%-flash", "gem25flash")
+                :gsub("kimi%-k2", "kimi-k2")
+              return "󰧑 " .. display
+            end,
+            cond = function()
+              return package.loaded["avante.config"] ~= nil
+            end,
+            on_click = function()
+              require("avante.api").select_model()
+            end,
+          },
+          {
+            function()
               -- Check if MCPHub is loaded
               if not vim.g.loaded_mcphub then
                 return "󰐻 -"
@@ -151,6 +191,12 @@ return {
                 return { fg = "#ffb86c" } -- Orange for connecting
               else
                 return { fg = "#ff5555" } -- Red for error/stopped
+              end
+            end,
+            on_click = function()
+              local State = require("mcphub.state")
+              if State.ui_instance then
+                State.ui_instance:toggle()
               end
             end,
           },
