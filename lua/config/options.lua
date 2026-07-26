@@ -31,16 +31,36 @@ opt.matchpairs:append("<:>") -- Add angle brackets to matchpairs
 --opt.display:append("lastline") -- Show last line when scrolling (显示不完整的最后一行)
 --opt.signcolumn="auto:2-9" -- Always show signcolumn
 
+-- Detect whether this session is connected over SSH
+vim.g.is_ssh = vim.env.SSH_CONNECTION ~= nil or vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil
+
+-- Over SSH there's no local clipboard tool to shell out to, so route the
+-- "+"/"*" registers through OSC 52 instead (works through the terminal, no
+-- xclip/wl-copy/pbcopy needed). This transparently affects any mapping that
+-- targets those registers, e.g. <leader>y in keymaps.lua.
+if vim.g.is_ssh and vim.fn.has("nvim-0.10") == 1 then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = osc52.paste("+"), ["*"] = osc52.paste("*") },
+  }
+end
+
 -- System related configurations
 if vim.fn.has("linux") == 1 then
   -- Linux specific configuration
+  vim.g.is_linux = true
 elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
   -- Windows specific configuration
+  vim.g.is_windows = true
 elseif vim.fn.has("wsl") == 1 then
   -- WSL specific configuration
+  vim.g.is_wsl = true
 elseif vim.fn.has("mac") == 1 then
   -- macOS specific configuration
   -- Maybe enable dash.vim and vim-plist
+  vim.g.is_mac = true
 end
 
 --vim.g.trouble_lualine = false -- Enable Winbar for lualine
