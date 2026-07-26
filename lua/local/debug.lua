@@ -39,14 +39,15 @@ function M.obj_inspect(obj)
   if type(obj) == "table" then
     local result = {}
     for k, v in pairs(obj) do
+      local k_str = tostring(k)
       if type(k) == "number" then
-        k = "[" .. k .. "]"
+        k_str = "[" .. k .. "]"
       elseif type(k) == "string" and k:find("[^%w]") then
-        k = string.format('["%s"]', k)
+        k_str = string.format('["%s"]', k)
       end
 
       local str_v = M.obj_inspect(v):gsub("\n", "\n\t")
-      table.insert(result, string.format("\t%s = %s", k, str_v))
+      table.insert(result, string.format("\t%s = %s", k_str, str_v))
     end
 
     local content = table.concat(result, ",\n")
