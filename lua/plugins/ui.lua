@@ -2,6 +2,7 @@ return {
   -- Vim notifications
   {
     "folke/noice.nvim",
+    event = "VeryLazy",
     opts = {
       presets = {
         bottom_search = true,
@@ -17,7 +18,30 @@ return {
     "folke/snacks.nvim",
     ---@type snacks.Config
     opts = {
+      dashboard = { enabled = true },
+      notifier = { enabled = true },
       input = { enabled = false },
+      image = { enabled = true },
+      explorer = { enabled = true },
+      statuscolumn = { enabled = true },
+    },
+  },
+
+  {
+    "3rd/image.nvim",
+    opts = {
+      backend = "kitty",
+      integrations = {
+        markdown = {
+          enabled = true,
+          clear_in_insert_mode = false,
+          download_remote_images = true,
+          only_render_image_at_cursor = false,
+          filetypes = { "markdown", "vimwiki" },
+        },
+      },
+      max_height_window_percentage = 50,
+      tmux_passthrough_safeguard = false,
     },
   },
 
@@ -34,13 +58,6 @@ return {
           return MiniHipatterns.compute_hex_color_group(rrggbb, "bg")
         end,
       }
-    end,
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    opts = function(_, opts)
-      -- Let neo-tree act like netrw
-      opts.filesystem.hijack_netrw_behavior = "open_current"
     end,
   },
   {
