@@ -1,6 +1,9 @@
 return {
   "nvim-mini/mini.animate",
   opts = function(_, opts)
+    opts.scroll = {
+      enable = false,
+    }
     opts.cursor = {
       -- Whether to enable this animation
       enable = true,
