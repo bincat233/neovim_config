@@ -27,6 +27,12 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
+    dependencies = {
+      {
+        "ColinKennedy/mega.cmdparse",
+        dependencies = { "ColinKennedy/mega.logging" },
+      },
+    },
     init = function()
       local env_files = {
         "~/.config/secret/deepseek.env",
