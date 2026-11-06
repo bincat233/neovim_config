@@ -12,6 +12,7 @@ return {
       },
     },
     dependencies = {
+      "nvim-neotest/neotest-vim-test",
       {
         "vim-test/vim-test",
         cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
