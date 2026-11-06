@@ -36,7 +36,7 @@ local function set_hl()
     --local random_color = utils.rgb_to_hex(utils.generate_distinct_color_in_lab(bg, 75))
     --vim.api.nvim_set_hl(0, group, { fg = random_color })
   end
-  vim.api.nvim_set_hl(0, "NavicText", { link = "@text" })
+  vim.api.nvim_set_hl(0, "NavicText", { link = "@markup" })
   vim.api.nvim_set_hl(0, "NavicSeparator", { link = "Comment" })
 end
 
@@ -207,9 +207,15 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
-      -- Unset the default config of navbar
-      opts.sections.lualine_c[5] = nil
-      --require("local.debug").obj_dump(opts)
+      -- Safely remove navic from lualine_c if present
+      if opts.sections and opts.sections.lualine_c then
+        opts.sections.lualine_c = vim.tbl_filter(function(x)
+          if type(x) == "table" and (x[1] == "navic" or x.name == "navic") then
+            return false
+          end
+          return true
+        end, opts.sections.lualine_c)
+      end
     end,
   },
 }

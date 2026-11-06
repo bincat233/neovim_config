@@ -20,10 +20,10 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras
     { import = "lazyvim.plugins.extras.editor.fzf" },
+    { import = "lazyvim.plugins.extras.editor.snacks_explorer" },
     { import = "lazyvim.plugins.extras.ai.avante" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" }, -- surround
     { import = "lazyvim.plugins.extras.ui.treesitter-context" }, -- show context of deep nested code
-    { import = "lazyvim.plugins.extras.coding.luasnip" }, -- snippets
     { import = "lazyvim.plugins.extras.dap.core" }, -- dap
     { import = "lazyvim.plugins.extras.dap.nlua" }, -- dap
     { import = "lazyvim.plugins.extras.lang.git" },

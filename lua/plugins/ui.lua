@@ -20,7 +20,7 @@ return {
     opts = {
       dashboard = { enabled = true },
       notifier = { enabled = true },
-      input = { enabled = false },
+      input = { enabled = true },
       image = { enabled = true },
       explorer = { enabled = true },
       statuscolumn = { enabled = true },
@@ -29,6 +29,7 @@ return {
 
   {
     "3rd/image.nvim",
+    enabled = false,
     opts = {
       backend = "kitty",
       integrations = {
