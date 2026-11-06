@@ -71,7 +71,7 @@ end
 if vim.g.neovide then
   -- If the GUI is Neovide
   -- opt.guifont = "Fira Code Nerd Font:h14"
-  opt.guifont = "monospace:h11:#e-subpixelantialias"
+  opt.guifont = "Maple Mono NF CN:h11:#e-subpixelantialias"
   opt.linespace = 0
   --Disable mini.anamate
   vim.g.minianimate_disable = true

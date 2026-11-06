@@ -40,6 +40,8 @@ map("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up [user]" })
 
 -- Delete Keymap of help manual
 map({ "n", "v", "i" }, "<F1>", "<Nop>")
+-- Ignore <D-Space> (Super/Win + Space, a global shortcut for voxtype)
+map({ "n", "v", "x", "s", "i", "o", "c", "t" }, "<D-Space>", "<Nop>", { silent = true })
 
 -- When paste in visual mode, don't copy it
 --map("x", "p", '"_dP')
