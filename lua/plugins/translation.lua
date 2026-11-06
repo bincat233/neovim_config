@@ -12,10 +12,10 @@ return {
         desc = "Translate selection",
         silent = false,
       },
-      { "<leader>tw", "m`viw:Translate ZH<CR>``", desc = "Translate word under cursor" },
-      { "<leader>tt", "m`V:Translate ZH<CR>``", desc = "Translate line under cursor" },
+      { "<leader>Tw", "m`viw:Translate ZH<CR>``", desc = "Translate word under cursor" },
+      { "<leader>Tt", "m`V:Translate ZH<CR>``", desc = "Translate line under cursor" },
       {
-        "<leader>ta",
+        "<leader>Ta",
         function()
           local current_pos = vim.fn.getpos(".")
           vim.cmd("normal! ggVG")

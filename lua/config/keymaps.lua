@@ -9,23 +9,23 @@ if vim.g.neovide == true then
   vim.keymap.set({ "n", "x" }, "<C-S-V>", '"+p', { desc = "Paste system clipboard" })
 end
 
--- Use leader key + u v to toggle list mode on/off
-map("n", "<leader>ul", ":set list!<CR>", { desc = "Toggle list mode [user]" })
+-- Use leader key + u I to toggle list mode on/off
+map("n", "<leader>uI", ":set list!<CR>", { desc = "Toggle list mode (invisible chars) [user]" })
 
 -- Use jk to escape insert mode
 map("i", "jk", "<esc>")
 
 -- Copy/Paste to system clipboard
+-- NOTE: 不设置 <leader>d，因为与 LazyVim 的 DAP 调试器命令族冲突（<leader>db/dc/di 等），且容易导致按键延迟；剪切可使用 <C-S-x> 或直接用 y+d
 wkadd({
   mode = { "n", "v" },
   { "<leader>y", '"+y', desc = "Copy to system clipboard", icon = " " },
-  { "<leader>d", '"+d', desc = "Delete to system clipboard", icon = " " },
   { "<leader>p", '"+p', desc = "Paste from system clipboard", icon = " " },
   { "<leader>P", '"+P', desc = "Paste from system clipboard", icon = " " },
 })
 
 -- UI - Reload vimrc
-map("n", "<leader>uS", ":source $HOME/.config/nvim/init.lua<cr>", { desc = "source config files [user]" })
+map("n", "<leader>uR", ":source $HOME/.config/nvim/init.lua<cr>", { desc = "Reload config files [user]" })
 
 -- <C-s-v> in all mode to paste
 map({ "n", "v", "x", "s" }, "<C-S-v>", '"+p')
@@ -35,8 +35,22 @@ map({ "v", "x" }, "<C-S-c>", '"+y')
 map({ "v", "x" }, "<C-S-x>", '"+d')
 
 -- Move selected text
-map("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move selected text down [user]" })
-map("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up [user]" })
+-- TODO: 待弃用。推荐改用 LazyVim 原生的 <A-j> / <A-k> 移动代码行，避免占用 Visual 模式的原生 J (行合并) 功能
+map("x", "J", function()
+  vim.notify("建议改用 <A-j> 移动代码行（避免占用 J 的行合并功能）", vim.log.levels.WARN, {
+    title = "Keymap Deprecation",
+    id = "move_lines_deprecation",
+  })
+  return vim.api.nvim_replace_termcodes(":move '>+1<CR>gv-gv", true, false, true)
+end, { expr = true, desc = "Move selected text down [user] (TODO: 待弃用 -> <A-j>)" })
+
+map("x", "K", function()
+  vim.notify("建议改用 <A-k> 移动代码行（避免占用 J 的行合并功能）", vim.log.levels.WARN, {
+    title = "Keymap Deprecation",
+    id = "move_lines_deprecation",
+  })
+  return vim.api.nvim_replace_termcodes(":move '<-2<CR>gv-gv", true, false, true)
+end, { expr = true, desc = "Move selected text up [user] (TODO: 待弃用 -> <A-k>)" })
 
 -- Delete Keymap of help manual
 map({ "n", "v", "i" }, "<F1>", "<Nop>")
@@ -57,6 +71,6 @@ map("x", "<A-LeftMouse>", "<bs>", { remap = true, silent = true }) --node_decrem
 
 --map("n", "<A-f>", ":NvimTreeToggle<CR>", opt) -- Use Alt+f to toggle nvim-tree
 
-wkadd({ "<leader>t", nil, desc = "translation", icon = "" })
+wkadd({ "<leader>T", nil, desc = "translation", icon = "" })
 
 --map("i", "<C-t>", "<ESC>V:Translate -output=insert ZH<CR>", { silent = true })
